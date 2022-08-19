@@ -1,0 +1,31 @@
+shell = "zsh"
+
+apply = ["defer"]
+
+[templates]
+defer = { value = 'zsh-defer source "{{ file }}"', each = true }
+
+[plugins.zsh-defer]
+github = "romkatv/zsh-defer"
+apply = ["source"]
+
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"
+
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
+
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+use = ["{{ name }}.zsh"]
+
+[plugins.asdf]
+local = "/opt/asdf-vm"
+
+[plugins.dotfiles]
+local = "~/.config/zsh/.zshrc.d"
+use = ["*.zsh"]
+apply = ["source"]
+
+[plugins.starship]
+inline = 'eval "$(starship init zsh)"'
