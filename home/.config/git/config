@@ -1,0 +1,10 @@
+[user]
+	name = conjLob
+	email = 53427774+conjLob@users.noreply.github.com
+	signingKey = 51AD0D13AE439BF4
+[commit]
+	gpgSign = true
+[init]
+	defaultBranch = main
+[tag]
+	gpgSign = true
