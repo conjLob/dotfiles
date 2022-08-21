@@ -1,0 +1,4 @@
+asdf-vm
+kind
+krew
+paru
