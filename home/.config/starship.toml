@@ -1,0 +1,17 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+[time]
+disabled = false
+
+[directory]
+fish_style_pwd_dir_length = 1
+
+[git_status]
+format = '([\[$conflicted$ahead_behind\]]($style) )'
+
+[container]
+disabled = true
+
+#[kubernetes]
+#detect_files = ["k8s"]
+#disabled = false
