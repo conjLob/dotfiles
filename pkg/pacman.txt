@@ -9,6 +9,9 @@ composer
 dhcpcd
 diffutils
 docker
+docker-compose
+duf
+dust
 expac
 fakeroot
 fd
@@ -16,12 +19,15 @@ flex
 gcc
 gcc-fortran
 git
+git-delta
 go
 groff
 helm
 helmfile
+htop
 inetutils
 ipython
+jq
 julia
 kubectl
 kubie
@@ -42,6 +48,7 @@ patch
 php
 pkgconf
 python
+python-pip
 qrencode
 qt5-base
 qt5-wayland
@@ -52,6 +59,7 @@ sheldon
 starship
 sudo
 sysfsutils
+tealdeer
 texinfo
 tree
 ttf-nerd-fonts-symbols-mono
@@ -61,6 +69,7 @@ vim
 wget
 which
 wl-clipboard
+xh
 xorg-xeyes
 zip
 zsh

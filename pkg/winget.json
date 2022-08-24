@@ -1,6 +1,6 @@
 {
 	"$schema" : "https://aka.ms/winget-packages.schema.2.0.json",
-	"CreationDate" : "2022-08-06T17:39:50.333-00:00",
+	"CreationDate" : "2022-08-21T16:56:59.545-00:00",
 	"Sources" : 
 	[
 		{
@@ -34,6 +34,15 @@
 					"PackageIdentifier" : "SlackTechnologies.Slack"
 				},
 				{
+					"PackageIdentifier" : "Microsoft.VC++2015-2022Redist-x64"
+				},
+				{
+					"PackageIdentifier" : "Microsoft.PowerShell"
+				},
+				{
+					"PackageIdentifier" : "Microsoft.PowerToys"
+				},
+				{
 					"PackageIdentifier" : "Microsoft.VisualStudioCode"
 				},
 				{
@@ -41,6 +50,9 @@
 				},
 				{
 					"PackageIdentifier" : "Nvidia.GeForceExperience"
+				},
+				{
+					"PackageIdentifier" : "Microsoft.DotNet.DesktopRuntime.6"
 				}
 			],
 			"SourceDetails" : 
