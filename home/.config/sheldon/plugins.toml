@@ -19,6 +19,10 @@ github = "zsh-users/zsh-completions"
 github = "zsh-users/zsh-autosuggestions"
 use = ["{{ name }}.zsh"]
 
+[plugins.docker-compose]
+remote = "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/docker-compose/_docker-compose"
+apply = ["fpath"]
+
 [plugins.asdf]
 local = "/opt/asdf-vm"
 
