@@ -16,6 +16,7 @@ expac
 fakeroot
 fd
 flex
+fzf
 gcc
 gcc-fortran
 git
@@ -29,6 +30,7 @@ inetutils
 ipython
 jq
 julia
+jwt-cli
 kubectl
 kubie
 logrotate
@@ -57,12 +59,13 @@ rsync
 rustup
 sheldon
 starship
+strace
 sudo
 sysfsutils
 tealdeer
 texinfo
 tree
-ttf-nerd-fonts-symbols-mono
+ttf-nerd-fonts-symbols-1000-em
 unzip
 vi
 vim
@@ -72,4 +75,5 @@ wl-clipboard
 xh
 xorg-xeyes
 zip
+zoxide
 zsh

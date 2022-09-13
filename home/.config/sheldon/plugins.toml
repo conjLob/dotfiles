@@ -9,8 +9,20 @@ defer = { value = 'zsh-defer source "{{ file }}"', each = true }
 github = "romkatv/zsh-defer"
 apply = ["source"]
 
-[plugins.zsh-syntax-highlighting]
-github = "zsh-users/zsh-syntax-highlighting"
+[plugins.dotfiles]
+local = "~/.config/zsh/.zshrc.d"
+use = ["*.zsh"]
+apply = ["source"]
+
+[plugins.zoxide]
+inline = 'zsh-defer -c "$(zoxide init zsh)"'
+
+[plugins.asdf]
+local = "/opt/asdf-vm"
+
+[plugins.docker-compose]
+remote = "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/docker-compose/_docker-compose"
+apply = ["fpath"]
 
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"
@@ -19,17 +31,8 @@ github = "zsh-users/zsh-completions"
 github = "zsh-users/zsh-autosuggestions"
 use = ["{{ name }}.zsh"]
 
-[plugins.docker-compose]
-remote = "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/docker-compose/_docker-compose"
-apply = ["fpath"]
-
-[plugins.asdf]
-local = "/opt/asdf-vm"
-
-[plugins.dotfiles]
-local = "~/.config/zsh/.zshrc.d"
-use = ["*.zsh"]
-apply = ["source"]
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"
 
 [plugins.starship]
 inline = 'eval "$(starship init zsh)"'
