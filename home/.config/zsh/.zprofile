@@ -6,6 +6,7 @@ export QT_QPA_PLATFORM='wayland;xcb'
 # gpg
 export GPG_TTY="$(tty)"
 export GPG_SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+gpg-connect-agent -q /bye
 
 # kubectl krew
 PATH="$HOME/.krew/bin:$PATH"
