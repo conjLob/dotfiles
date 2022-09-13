@@ -1,4 +1,6 @@
 asdf-vm
+cloud-sql-proxy-bin
+google-cloud-sdk
 kind
 krew
 paru

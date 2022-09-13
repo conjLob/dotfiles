@@ -1,2 +1,5 @@
-/htop/
+/composer/
+/configstore/
+/gcloud/
 /helm/
+/htop/
