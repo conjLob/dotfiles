@@ -2,9 +2,21 @@
 	name = conjLob
 	email = 53427774+conjLob@users.noreply.github.com
 	signingKey = 51AD0D13AE439BF4
-[commit]
-	gpgSign = true
+[core]
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
 [init]
 	defaultBranch = main
+[commit]
+	gpgSign = true
 [tag]
 	gpgSign = true
+[merge]
+	conflictStyle = diff3
+[diff]
+	algorithm = histogram
+	colorMoved = default
+[delta]
+	line-numbers = true
+	navigate = true
