@@ -11,6 +11,9 @@ repo_root_format = "[$repo_root]($repo_root_style)[$path]($style)[$read_only]($r
 [git_status]
 format = '([\[$conflicted$ahead_behind\]]($style) )'
 
+[package]
+disabled = true
+
 [container]
 disabled = true
 
