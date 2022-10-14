@@ -22,6 +22,7 @@ gcc-fortran
 git
 git-delta
 go
+grc
 groff
 helm
 helmfile

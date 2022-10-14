@@ -8,6 +8,9 @@ export GPG_TTY="$(tty)"
 export GPG_SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 gpg-connect-agent -q /bye
 
+# man
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
 # kubectl krew
 PATH="$HOME/.krew/bin:$PATH"
 
