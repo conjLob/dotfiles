@@ -13,11 +13,27 @@ help() {
 }
 
 cmds=(
-    env
     id
+    w
+    who
+    env
+    stat
+    last
+    uptime
+    sysctl
     ps
+    free
+    vmstat
+    blkid
+    lsblk
+    mount
+    findmnt
     ss
+    lsof
+    nmap
     ping
+    whois
+    traceroute
     docker
     docker-compose
 )
