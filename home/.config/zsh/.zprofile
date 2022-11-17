@@ -1,5 +1,13 @@
 PATH="$HOME/.local/bin:$PATH"
 
+export PAGER=less
+export EDITOR=vim
+export VISUAL=vim
+export BROWSER='/mnt/c/Program Files/Google/Chrome/Application/chrome.exe'
+
+# man
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
 # qt
 export QT_QPA_PLATFORM='wayland;xcb'
 
@@ -7,9 +15,6 @@ export QT_QPA_PLATFORM='wayland;xcb'
 export GPG_TTY="$(tty)"
 export GPG_SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 gpg-connect-agent -q /bye
-
-# man
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 # kubectl krew
 PATH="$HOME/.krew/bin:$PATH"

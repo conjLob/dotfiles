@@ -31,7 +31,7 @@ htop
 inetutils
 ipython
 jq
-julia
+jupyterlab
 jwt-cli
 kubectl
 kubie
@@ -45,6 +45,7 @@ man-pages
 nano
 netctl
 nmap
+nodejs
 noto-fonts
 openresolv
 openssh
@@ -54,7 +55,7 @@ patch
 php
 pkgconf
 python
-python-pip
+python-ipykernel
 qrencode
 qt5-base
 qt5-wayland
@@ -76,6 +77,7 @@ ttf-nerd-fonts-symbols-1000-em
 unzip
 vi
 vim
+wabt
 websocat
 wget
 which
