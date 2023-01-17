@@ -1,3 +1,17 @@
 [v1]
+"cargo-asm 0.1.16 (registry+https://github.com/rust-lang/crates.io-index)" = [
+    "cargo-asm",
+    "cargo-llvm-ir",
+]
+"cargo-audit 0.17.4 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-audit"]
+"cargo-cache 0.8.3 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-cache"]
+"cargo-expand 1.0.36 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-expand"]
+"cargo-outdated 0.11.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-outdated"]
+"cargo-update 11.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = [
+    "cargo-install-update",
+    "cargo-install-update-config",
+]
+"cargo-watch 8.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-watch"]
 "evcxr_jupyter 0.14.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["evcxr_jupyter"]
 "evcxr_repl 0.14.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["evcxr"]
+"sccache 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)" = ["sccache"]

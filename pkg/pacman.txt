@@ -48,6 +48,7 @@ m4
 make
 man-db
 man-pages
+mold
 nano
 netctl
 nmap
