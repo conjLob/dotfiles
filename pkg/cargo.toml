@@ -1,0 +1,3 @@
+[v1]
+"evcxr_jupyter 0.14.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["evcxr_jupyter"]
+"evcxr_repl 0.14.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["evcxr"]
