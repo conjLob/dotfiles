@@ -88,3 +88,54 @@ tasks:
   sync:drop-unnecessary-paths.sh:
     - task: sync:etc-file
       vars: { FILE: profile.d/drop-unnecessary-paths.sh }
+
+  export:pkg:
+    deps:
+      - export:pacman
+      - export:paru
+      - export:winget
+      - export:chocolatey
+      - export:asdf
+      - export:helm
+      - export:cargo
+      - export:julia
+
+  export:pacman: pacman -Qqen > pkg/pacman.txt
+
+  export:paru: pacman -Qqem > pkg/paru.txt
+
+  export:winget:
+    - winget.exe export -o /tmp/winget.json
+    - >-
+      jq '
+        .[1] as $ignores
+        | .[0]
+        | .Sources[0].Packages
+          |= reduce $ignores[] as $ignore (
+            .;
+            map(select(
+              .PackageIdentifier
+              | startswith($ignore)
+              | not
+            ))
+          )
+        | .Sources[0].Packages
+          |= sort_by(.PackageIdentifier)
+      '
+      -s /tmp/winget.json pkg/winget.ignore.json
+      > pkg/winget.json
+    - rm /tmp/winget.json
+
+  export:chocolatey:
+    - rm pkg/chocolatey.xml
+    - choco.exe export -o pkg/chocolatey.xml
+
+  export:asdf: asdf plugin list --urls > pkg/asdf.txt
+
+  export:helm: helm plugin list > pkg/helm.tsv
+
+  export:cargo:
+    - cp ~/.cargo/.crates.toml pkg/cargo.toml
+    - cp ~/.cargo/.install_config.toml pkg/cargo.config.toml
+
+  export:julia: cp ~/.julia/environments/v1.8/Project.toml pkg/julia.toml
