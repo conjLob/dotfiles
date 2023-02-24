@@ -1,5 +1,6 @@
 asdf-vm
 cloud-sql-proxy-bin
+go-task
 google-cloud-sdk
 julia-bin
 kind

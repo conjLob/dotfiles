@@ -12,4 +12,6 @@ help() {
     "$@" --help 2>&1 | bathelp
 }
 
+alias task='go-task'
+
 alias drill='drill -z'

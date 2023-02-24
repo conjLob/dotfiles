@@ -1,0 +1,90 @@
+version: "3"
+
+tasks:
+  link:home:
+    deps:
+      - link:zshenv
+      - link:config-home
+      - link:ssh-config
+      - link:gpg-agent.conf
+
+  link:home-file:
+    label: link:home-file {{.FILE}}
+    cmds:
+      - ln -s {{.PWD}}/home/{{.FILE}} ~/{{.FILE}}
+    status:
+      - test -L ~/{{.FILE}}
+    internal: true
+
+  link:zshenv:
+    - task: link:home-file
+      vars: { FILE: .zshenv }
+
+  link:config-home:
+    - task: link:home-file
+      vars: { FILE: .config }
+
+  link:ssh-config:
+    - task: link:home-file
+      vars: { FILE: .ssh/config }
+
+  link:gpg-agent.conf:
+    - task: link:home-file
+      vars: { FILE: .gnupg/gpg-agent.conf }
+
+  deploy:ssh-key:
+    cmds:
+      - gpg --export-ssh-key {{.USER}} > ~/.ssh/gpg.pub
+    status:
+      - test -f ~/.ssh/gpg.pub
+
+  sync:etc:
+    deps:
+      - sync:fstab
+      - sync:locale.gen
+      - sync:pacman-mirrorlist
+      - sync:resolv.conf
+      - sync:systemd-resolved.conf
+      - sync:wsl.conf
+      - sync:drop-unnecessary-paths.sh
+
+  sync:etc-file:
+    label: sync:etc-file {{.FILE}}
+    cmds:
+      - >-
+        if [ ! -f /etc/{{.FILE}} ] || [ etc/{{.FILE}} -nt /etc/{{.FILE}} ]; then
+          sudo cp --preserve=timestamps etc/{{.FILE}} /etc/{{.FILE}};
+        else
+          cp --preserve=timestamps /etc/{{.FILE}} etc/{{.FILE}};
+        fi
+    status:
+      - test -f /etc/{{.FILE}}
+      - test $(stat -c %Y etc/{{.FILE}}) -eq $(stat -c %Y /etc/{{.FILE}})
+
+  sync:fstab:
+    - task: sync:etc-file
+      vars: { FILE: fstab }
+
+  sync:locale.gen:
+    - task: sync:etc-file
+      vars: { FILE: locale.gen }
+
+  sync:pacman-mirrorlist:
+    - task: sync:etc-file
+      vars: { FILE: pacman.d/mirrorlist }
+
+  sync:resolv.conf:
+    - task: sync:etc-file
+      vars: { FILE: resolv.conf }
+
+  sync:systemd-resolved.conf:
+    - task: sync:etc-file
+      vars: { FILE: systemd/resolved.conf }
+
+  sync:wsl.conf:
+    - task: sync:etc-file
+      vars: { FILE: wsl.conf }
+
+  sync:drop-unnecessary-paths.sh:
+    - task: sync:etc-file
+      vars: { FILE: profile.d/drop-unnecessary-paths.sh }
