@@ -8,6 +8,7 @@ bison
 composer
 dhcpcd
 diffutils
+direnv
 docker
 docker-compose
 dsq

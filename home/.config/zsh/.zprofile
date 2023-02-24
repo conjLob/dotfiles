@@ -16,6 +16,9 @@ export GPG_TTY="$(tty)"
 export GPG_SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 gpg-connect-agent -q /bye
 
+# direnv
+export DIRENV_LOG_FORMAT=''
+
 # kubectl krew
 PATH="$HOME/.krew/bin:$PATH"
 

@@ -17,6 +17,9 @@ apply = ["source"]
 [plugins.zoxide]
 inline = 'zsh-defer -c "$(zoxide init zsh)"'
 
+[plugins.direnv]
+inline = 'zsh-defer -c "$(direnv hook zsh)"'
+
 [plugins.asdf]
 local = "/opt/asdf-vm"
 
