@@ -1,15 +1,22 @@
-"$schema" = 'https://starship.rs/config-schema.json'
+#:schema https://starship.rs/config-schema.json
 
 [time]
 disabled = false
+format = "[$time]($style) "
+
+[memory_usage]
+symbol = " "
 
 [directory]
 fish_style_pwd_dir_length = 1
 repo_root_style = "bold cyan"
 repo_root_format = "[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
 
+[git_metrics]
+disabled = false
+
 [git_status]
-format = '([\[$conflicted$ahead_behind\]]($style) )'
+format = '([\[$conflicted$modified$staged$ahead_behind\]]($style) )'
 
 [custom.direnv]
 format = '[\[direnv\]]($style) '
@@ -19,9 +26,38 @@ when = 'test -n "$DIRENV_FILE"'
 [package]
 disabled = true
 
+[rust]
+symbol = " "
+
+[golang]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[python]
+symbol = " "
+
+[elixir]
+symbol = " "
+
+[php]
+symbol = " "
+
 [container]
 disabled = true
+
+[docker_context]
+symbol = " "
 
 #[kubernetes]
 #detect_files = ["k8s"]
 #disabled = false
+
+[gcloud]
+symbol = " "
+format = "on [$symbol$active]($style) "
+
+[aws]
+symbol = " "
+format = "on [$symbol$profile]($style) "
