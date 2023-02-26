@@ -89,6 +89,47 @@ tasks:
     - task: sync:etc-file
       vars: { FILE: profile.d/drop-unnecessary-paths.sh }
 
+  sync:wsl:
+    deps:
+      - sync:wslconfig
+      - sync:wslgconfig
+      - sync:boot.ps1
+
+  sync:wsl-file:
+    label: sync:wsl-file {{.FILE}}
+    vars:
+      WIN_FILE: "{{.USERPROFILE}}/{{.FILE}}"
+      REPO_FILE: wsl/{{base .FILE}}
+      CP_OPT: --preserve=timestamps --no-preserve=mode
+    cmds:
+      - >-
+        if [ ! -f {{.WIN_FILE}} ] || [ {{.REPO_FILE}} -nt {{.WIN_FILE}} ]; then
+          cp {{.CP_OPT}} {{.REPO_FILE}} {{.WIN_FILE}};
+        else
+          cp {{.CP_OPT}} {{.WIN_FILE}} {{.REPO_FILE}};
+        fi
+    status:
+      - test -f {{.WIN_FILE}}
+      - test $(stat -c %Y {{.REPO_FILE}}) -eq $(stat -c %Y {{.WIN_FILE}})
+
+  sync:wslconfig:
+    - task: sync:wsl-file
+      vars: { FILE: .wslconfig }
+
+  sync:wslgconfig:
+    - task: sync:wsl-file
+      vars: { FILE: .wslgconfig }
+
+  sync:boot.ps1:
+    - task: sync:wsl-file
+      vars: { FILE: AppData/Local/ArchLinux/boot.ps1 }
+
+  deploy:wsl-icon:
+    cmds:
+      - cp wsl/icon.png {{.LOCALAPPDATA}}/ArchLinux/icon.png
+    status:
+      - test -f {{.LOCALAPPDATA}}/ArchLinux/icon.png
+
   export:pkg:
     deps:
       - export:pacman

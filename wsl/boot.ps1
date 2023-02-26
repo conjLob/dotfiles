@@ -11,4 +11,6 @@ if ($?) {
     exit 1
 }
 
+$Env:WSLENV += ':USERPROFILE/p:APPDATA/p:LOCALAPPDATA/p'
+
 wsl -d ArchLinux --cd ~
