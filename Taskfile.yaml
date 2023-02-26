@@ -73,6 +73,7 @@ tasks:
   sync:locale.gen:
     - task: sync:etc-file
       vars: { FILE: locale.gen }
+    - task: gen:locale
 
   sync:pacman-mirrorlist:
     - task: sync:etc-file
@@ -93,6 +94,13 @@ tasks:
   sync:drop-unnecessary-paths.sh:
     - task: sync:etc-file
       vars: { FILE: profile.d/drop-unnecessary-paths.sh }
+
+  gen:locale:
+    cmds:
+      - sudo locale-gen
+    sources:
+      - /etc/locale.gen
+    method: checksum
 
   sync:wsl:
     deps:
