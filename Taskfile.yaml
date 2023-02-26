@@ -7,6 +7,7 @@ tasks:
       - link:config-home
       - link:ssh-config
       - link:gpg-agent.conf
+      - link:cargo-config.toml
 
   link:home-file:
     label: link:home-file {{.FILE}}
@@ -31,6 +32,10 @@ tasks:
   link:gpg-agent.conf:
     - task: link:home-file
       vars: { FILE: .gnupg/gpg-agent.conf }
+
+  link:cargo-config.toml:
+    - task: link:home-file
+      vars: { FILE: .cargo/config.toml }
 
   deploy:ssh-key:
     cmds:

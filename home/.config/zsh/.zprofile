@@ -24,8 +24,6 @@ PATH="$HOME/.krew/bin:$PATH"
 
 # rust
 PATH="$HOME/.cargo/bin:$PATH"
-export RUSTC_WRAPPER=sccache
-export RUSTFLAGS='-C link-arg=-fuse-ld=mold'
 
 # go
 export GOPATH="$HOME/.go"
