@@ -135,13 +135,13 @@ tasks:
 
   sync:boot.ps1:
     - task: sync:wsl-file
-      vars: { FILE: AppData/Local/ArchLinux/boot.ps1 }
+      vars: { FILE: "AppData/Local/{{.WSL_DISTRO_NAME}}/boot.ps1" }
 
   deploy:wsl-icon:
     cmds:
-      - cp wsl/icon.png {{.LOCALAPPDATA}}/ArchLinux/icon.png
+      - cp wsl/icon.png {{.LOCALAPPDATA}}/{{.WSL_DISTRO_NAME}}/icon.png
     status:
-      - test -f {{.LOCALAPPDATA}}/ArchLinux/icon.png
+      - test -f {{.LOCALAPPDATA}}/{{.WSL_DISTRO_NAME}}/icon.png
 
   export:pkg:
     deps:

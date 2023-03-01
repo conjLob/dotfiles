@@ -5,9 +5,9 @@
 $err = wsl -d ArchLinux --mount --vhd "$Env:LOCALAPPDATA\ArchLinux\home.vhdx" --bare
 
 if ($?) {
-    echo 'Your VHD was mounted successfully!'
+    Write-Output 'Your VHD was mounted successfully!'
 } elseif ($err[1] -ne 'Error code: Wsl/Service/AttachDisk/MountVhd/WSL_E_USER_VHD_ALREADY_ATTACHED') {
-    echo $err
+    Write-Output $err
     exit 1
 }
 
