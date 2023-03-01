@@ -27,6 +27,13 @@ local = "/opt/asdf-vm"
 remote = "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/docker-compose/_docker-compose"
 apply = ["fpath"]
 
+[plugins.helmfile]
+inline = 'zsh-defer -c "$(helmfile completion zsh); compdef _helmfile helmfile"'
+
+[plugins.bash-completions]
+local = "/usr/share/bash-completion/completions"
+use = ["aws", "kubie"]
+
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"
 

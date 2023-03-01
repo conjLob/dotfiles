@@ -15,8 +15,9 @@ zstyle ':completion:*' completer _complete _prefix
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' '+r:|[-_.]=**'
 zstyle ':completion:*' list-colors "$LS_COLORS"
 
-autoload -Uz compinit
+autoload -Uz compinit bashcompinit
 zsh-defer compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
+zsh-defer bashcompinit
 
 zmodload zsh/complist
 bindkey -M menuselect '^P' up-line-or-history
