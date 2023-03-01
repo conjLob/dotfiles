@@ -87,6 +87,10 @@ tasks:
     - task: sync:etc-file
       vars: { FILE: systemd/resolved.conf }
 
+  sync:systemd-static-wsl.network:
+    - task: sync:etc-file
+      vars: { FILE: systemd/network/static-wsl.network }
+
   sync:wsl.conf:
     - task: sync:etc-file
       vars: { FILE: wsl.conf }

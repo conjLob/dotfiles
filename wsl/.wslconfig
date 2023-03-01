@@ -1,2 +1,4 @@
 [wsl2]
+vmSwitch=StaticWSL
+dhcp=false
 swap=0
