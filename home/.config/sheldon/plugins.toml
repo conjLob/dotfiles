@@ -23,6 +23,10 @@ inline = 'zsh-defer -c "$(direnv hook zsh)"'
 [plugins.asdf]
 local = "/opt/asdf-vm"
 
+[plugins.tabtab]
+local = "~/.config/tabtab/zsh"
+use = ["pnpm.zsh"]
+
 [plugins.docker-compose]
 remote = "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/docker-compose/_docker-compose"
 apply = ["fpath"]

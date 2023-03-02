@@ -143,6 +143,13 @@ tasks:
     status:
       - test -f {{.LOCALAPPDATA}}/{{.WSL_DISTRO_NAME}}/icon.png
 
+  enable:corepack:
+    cmds:
+      - PATH=/usr/bin sudo corepack enable --install-directory /usr/local/bin
+      - PATH=/usr/bin sudo corepack enable --install-directory /usr/local/bin npm
+    status:
+      - test -L /usr/local/bin/npm
+
   export:pkg:
     deps:
       - export:pacman
@@ -193,3 +200,5 @@ tasks:
     - cp ~/.cargo/.install_config.toml pkg/cargo.config.toml
 
   export:julia: cp ~/.julia/environments/v1.8/Project.toml pkg/julia.toml
+
+  export:pnpm: pnpm ls -g --depth 0 | tail +6 | cut -d ' ' -f 1 > pkg/pnpm.txt
