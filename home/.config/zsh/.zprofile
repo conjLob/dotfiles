@@ -29,6 +29,11 @@ PATH="$HOME/.cargo/bin:$PATH"
 export GOPATH="$HOME/.go"
 PATH="$GOPATH/bin:$PATH"
 
+# pipx
+export PIPX_HOME="$HOME/.pipx"
+export PIPX_BIN_DIR="$PIPX_HOME/bin"
+PATH="$PIPX_BIN_DIR:$PATH"
+
 # pnpm
 export PNPM_HOME="$XDG_DATA_HOME/pnpm"
 PATH="$PNPM_HOME:$PATH"

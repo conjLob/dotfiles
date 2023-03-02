@@ -201,4 +201,6 @@ tasks:
 
   export:julia: cp ~/.julia/environments/v1.8/Project.toml pkg/julia.toml
 
+  export:pipx: pipx list --short | cut -d ' ' -f 1 > pkg/pipx.txt
+
   export:pnpm: pnpm ls -g --depth 0 | tail +6 | cut -d ' ' -f 1 > pkg/pnpm.txt

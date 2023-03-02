@@ -64,6 +64,7 @@ php
 pkgconf
 python
 python-ipykernel
+python-pipx
 qrencode
 qt5-base
 qt5-wayland
