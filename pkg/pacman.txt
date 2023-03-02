@@ -1,11 +1,7 @@
 arch-install-scripts
-autoconf
-automake
 aws-cli-v2
 base
 bat
-binutils
-bison
 composer
 cuda
 cudnn
@@ -21,16 +17,13 @@ expac
 fakeroot
 fd
 ffmpeg
-flex
 fx
 fzf
-gcc
 gcc-fortran
 git
 git-delta
 go
 grc
-groff
 helm
 helmfile
 hey
@@ -49,8 +42,6 @@ llvm
 logrotate
 lsd
 lsof
-m4
-make
 man-db
 man-pages
 miniserve
@@ -68,7 +59,6 @@ pacman-contrib
 pass
 patch
 php
-pkgconf
 python
 python-ipykernel
 python-pipx

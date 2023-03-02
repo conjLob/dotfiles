@@ -160,8 +160,10 @@ tasks:
       - export:helm
       - export:cargo
       - export:julia
+      - export:pipx
+      - export:pnpm
 
-  export:pacman: pacman -Qqen > pkg/pacman.txt
+  export:pacman: comm -23 <(pacman -Qqen) <(pacman -Qqg base-devel) > pkg/pacman.txt
 
   export:paru: pacman -Qqem > pkg/paru.txt
 
