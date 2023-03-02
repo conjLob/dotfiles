@@ -193,7 +193,7 @@ tasks:
 
   export:asdf: asdf plugin list --urls > pkg/asdf.txt
 
-  export:helm: helm plugin list > pkg/helm.tsv
+  export:helm: helm plugin list | tail +2 | cut -f 1 | tr -d ' ' > pkg/helm.txt
 
   export:cargo:
     - cp ~/.cargo/.crates.toml pkg/cargo.toml
