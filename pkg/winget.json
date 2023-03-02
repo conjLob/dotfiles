@@ -1,14 +1,32 @@
 {
   "$schema": "https://aka.ms/winget-packages.schema.2.0.json",
-  "CreationDate": "2023-02-24T17:23:49.276-00:00",
+  "CreationDate": "2023-03-02T21:10:59.309-00:00",
   "Sources": [
     {
       "Packages": [
         {
+          "PackageIdentifier": "Bitwarden.Bitwarden"
+        },
+        {
+          "PackageIdentifier": "BlenderFoundation.Blender"
+        },
+        {
+          "PackageIdentifier": "DeepL.DeepL"
+        },
+        {
           "PackageIdentifier": "Discord.Discord"
         },
         {
+          "PackageIdentifier": "GIMP.GIMP"
+        },
+        {
           "PackageIdentifier": "Google.Chrome"
+        },
+        {
+          "PackageIdentifier": "Grammarly.Grammarly"
+        },
+        {
+          "PackageIdentifier": "Inkscape.Inkscape"
         },
         {
           "PackageIdentifier": "MSYS2.MSYS2"
@@ -35,7 +53,13 @@
           "PackageIdentifier": "Microsoft.WindowsTerminal"
         },
         {
+          "PackageIdentifier": "Mozilla.Firefox"
+        },
+        {
           "PackageIdentifier": "Nvidia.GeForceExperience"
+        },
+        {
+          "PackageIdentifier": "Postman.Postman"
         },
         {
           "PackageIdentifier": "SlackTechnologies.Slack"
@@ -45,6 +69,9 @@
         },
         {
           "PackageIdentifier": "Valve.Steam"
+        },
+        {
+          "PackageIdentifier": "dbeaver.dbeaver"
         }
       ],
       "SourceDetails": {

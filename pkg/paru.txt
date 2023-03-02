@@ -2,7 +2,9 @@ asdf-vm
 cloud-sql-proxy-bin
 go-task
 google-cloud-sdk
+google-cloud-sdk-gke-gcloud-auth-plugin
 julia-bin
 kind
 krew
+pack-cli
 paru
