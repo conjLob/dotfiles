@@ -2,7 +2,7 @@ PATH="$HOME/.local/bin:$PATH"
 
 export PAGER=less
 export EDITOR=vim
-export VISUAL=vim
+export VISUAL='code --wait --new-window'
 export BROWSER='/mnt/c/Program Files/Google/Chrome/Application/chrome.exe'
 
 # man
