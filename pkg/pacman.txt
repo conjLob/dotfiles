@@ -1,12 +1,12 @@
 arch-install-scripts
 aws-cli-v2
 base
+base-devel
 bat
 composer
 cuda
 cudnn
 dhcpcd
-diffutils
 direnv
 docker
 docker-compose
@@ -14,7 +14,6 @@ dsq
 duf
 dust
 expac
-fakeroot
 fd
 ffmpeg
 fx
@@ -57,7 +56,6 @@ openssl-1.1
 packer
 pacman-contrib
 pass
-patch
 php
 python
 python-ipykernel
@@ -72,12 +70,10 @@ sheldon
 shfmt
 starship
 strace
-sudo
 sysfsutils
 tcpdump
 tealdeer
 terraform
-texinfo
 traceroute
 tree
 unzip
@@ -86,7 +82,6 @@ vim
 wabt
 websocat
 wget
-which
 whois
 wl-clipboard
 xh
