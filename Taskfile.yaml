@@ -52,6 +52,7 @@ tasks:
       - sync:systemd-resolved.conf
       - sync:wsl.conf
       - sync:drop-unnecessary-paths.sh
+      - sync:fonts-wsl.conf
 
   sync:etc-file:
     label: sync:etc-file {{.FILE}}
@@ -94,6 +95,10 @@ tasks:
   sync:drop-unnecessary-paths.sh:
     - task: sync:etc-file
       vars: { FILE: profile.d/drop-unnecessary-paths.sh }
+
+  sync:fonts-wsl.conf:
+    - task: sync:etc-file
+      vars: { FILE: fonts/conf.d/00-wsl.conf }
 
   gen:locale:
     cmds:
