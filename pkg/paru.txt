@@ -7,4 +7,6 @@ julia-bin
 kind
 krew
 pack-cli
+pandoc-bin
 paru
+stripe-cli

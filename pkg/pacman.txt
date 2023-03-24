@@ -17,6 +17,7 @@ ffmpeg
 fx
 fzf
 gcc-fortran
+gdb
 git
 git-delta
 go
@@ -39,6 +40,7 @@ lsd
 lsof
 man-db
 man-pages
+mercurial
 miniserve
 mold
 nmap
@@ -64,6 +66,7 @@ strace
 tcpdump
 tealdeer
 terraform
+tinyproxy
 traceroute
 tree
 unzip
