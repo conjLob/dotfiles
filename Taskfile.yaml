@@ -107,6 +107,29 @@ tasks:
       - /etc/locale.gen
     method: checksum
 
+  sync:win:
+    deps:
+      - sync:keyhac-config.py
+
+  sync:win-file:
+    label: sync:win-file {{.WIN_FILE}} {{.REPO_FILE}}
+    cmds:
+      - >-
+        if [ ! -f {{.WIN_FILE}} ] || [ {{.REPO_FILE}} -nt {{.WIN_FILE}} ]; then
+          cp --preserve=timestamps --no-preserve=mode {{.REPO_FILE}} {{.WIN_FILE}};
+        else
+          cp --preserve=timestamps --no-preserve=mode {{.WIN_FILE}} {{.REPO_FILE}};
+        fi
+    status:
+      - test -f {{.WIN_FILE}}
+      - test $(stat -c %Y {{.REPO_FILE}}) -eq $(stat -c %Y {{.WIN_FILE}})
+
+  sync:keyhac-config.py:
+    - task: sync:win-file
+      vars:
+        WIN_FILE: "{{.APPDATA}}/Keyhac/config.py"
+        REPO_FILE: win/keyhac/config.py
+
   sync:wsl:
     deps:
       - sync:wslconfig
@@ -114,21 +137,10 @@ tasks:
       - sync:boot.ps1
 
   sync:wsl-file:
-    label: sync:wsl-file {{.FILE}}
-    vars:
-      WIN_FILE: "{{.USERPROFILE}}/{{.FILE}}"
-      REPO_FILE: wsl/{{base .FILE}}
-      CP_OPT: --preserve=timestamps --no-preserve=mode
-    cmds:
-      - >-
-        if [ ! -f {{.WIN_FILE}} ] || [ {{.REPO_FILE}} -nt {{.WIN_FILE}} ]; then
-          cp {{.CP_OPT}} {{.REPO_FILE}} {{.WIN_FILE}};
-        else
-          cp {{.CP_OPT}} {{.WIN_FILE}} {{.REPO_FILE}};
-        fi
-    status:
-      - test -f {{.WIN_FILE}}
-      - test $(stat -c %Y {{.REPO_FILE}}) -eq $(stat -c %Y {{.WIN_FILE}})
+    - task: sync:win-file
+      vars:
+        WIN_FILE: "{{.USERPROFILE}}/{{.FILE}}"
+        REPO_FILE: wsl/{{base .FILE}}
 
   sync:wslconfig:
     - task: sync:wsl-file
