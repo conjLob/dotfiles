@@ -1,9 +1,10 @@
 PATH="$HOME/.local/bin:$PATH"
+PATH="$HOME/repos/dotfiles/bin:$PATH"
 
 export PAGER=less
 export EDITOR=vim
 export VISUAL='code --wait --new-window'
-export BROWSER='/mnt/c/Program Files/Google/Chrome/Application/chrome.exe'
+export BROWSER=chrome
 
 # man
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [[ "$(uname -r)" == *microsoft* ]]; then
+    '/mnt/c/Program Files/Google/Chrome/Application/chrome.exe' "$@"
+else
+    chrome "$@"
+fi

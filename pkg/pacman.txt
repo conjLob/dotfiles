@@ -20,6 +20,7 @@ gcc-fortran
 gdb
 git
 git-delta
+github-cli
 gitui
 go
 grc

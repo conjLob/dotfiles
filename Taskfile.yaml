@@ -218,6 +218,8 @@ tasks:
 
   export:asdf: asdf plugin list --urls > pkg/asdf.txt
 
+  export:github-cli: gh extension list | cut -f 2 > pkg/github-cli.txt
+
   export:helm: helm plugin list | tail +2 | cut -f 1 | tr -d ' ' > pkg/helm.txt
 
   export:cargo:

@@ -1,0 +1,34 @@
+prSections:
+  - title: Created
+    filters: is:open archived:false author:@me
+  - title: Review Requests
+    filters: is:open archived:false review-requested:@me
+  - title: Reviewed
+    filters: is:open archived:false reviewed-by:@me
+  - title: Involved
+    filters: is:open archived:false involves:@me -author:@me
+issuesSections:
+  - title: Created
+    filters: is:open archived:false author:@me
+  - title: Assigned
+    filters: is:open archived:false assignee:@me
+  - title: Involved
+    filters: is:open archived:false involves:@me -author:@me
+defaults:
+  preview:
+    open: true
+    width: 60
+  view: prs
+  layout:
+    prs:
+      assignees:
+        hidden: true
+      base:
+        hidden: true
+    issues:
+      assignees:
+        hidden: true
+      reactions:
+        hidden: true
+pager:
+  diff: delta
