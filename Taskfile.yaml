@@ -43,6 +43,12 @@ tasks:
     status:
       - test -f ~/.ssh/gpg.pub
 
+  fetch:gitui-key_bindings.ron:
+    vars:
+      SRC: https://raw.githubusercontent.com/extrawurst/gitui/master/vim_style_key_config.ron
+    cmds:
+      - curl {{ .SRC }} > home/.config/gitui/key_bindings.ron
+
   sync:etc:
     deps:
       - sync:fstab
