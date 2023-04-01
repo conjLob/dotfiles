@@ -9,6 +9,9 @@ defer = "{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}"
 github = "romkatv/zsh-defer"
 apply = ["source"]
 
+[plugins.vivid]
+inline = 'export LS_COLORS="$(vivid generate one-dark)"'
+
 [plugins.dotfiles]
 local = "~/.config/zsh/.zshrc.d"
 use = ["*.zsh"]

@@ -73,6 +73,7 @@ traceroute
 tree
 unzip
 vim
+vivid
 wabt
 websocat
 wget
