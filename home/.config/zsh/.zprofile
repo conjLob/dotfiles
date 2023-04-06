@@ -3,7 +3,7 @@ PATH="$HOME/repos/dotfiles/bin:$PATH"
 
 export PAGER=less
 export EDITOR=vim
-export VISUAL='code --wait --new-window'
+export VISUAL=vim
 export BROWSER=chrome
 
 # man

@@ -13,7 +13,7 @@ zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
 zstyle ':completion:*' menu select interactive
 zstyle ':completion:*' completer _complete _prefix
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' '+r:|[-_.]=**'
-zstyle ':completion:*' list-colors "$LS_COLORS"
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 autoload -Uz compinit bashcompinit
 zsh-defer compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"

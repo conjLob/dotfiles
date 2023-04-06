@@ -1,7 +1,7 @@
 alias ls='lsd'
 alias ll='ls -l'
-alias la='ls -a'
-alias lla='ls -la'
+alias la='ls -A'
+alias lla='ls -lA'
 
 alias grep='grep --color=auto'
 alias diff='diff -u --color=auto'
