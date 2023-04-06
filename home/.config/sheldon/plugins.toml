@@ -12,10 +12,20 @@ apply = ["source"]
 [plugins.vivid]
 inline = 'export LS_COLORS="$(vivid generate one-dark)"'
 
-[plugins.dotfiles]
+[plugins.zshrc-foreground]
 local = "~/.config/zsh/.zshrc.d"
-use = ["*.zsh"]
+use = ["*.fg.zsh"]
 apply = ["source"]
+
+[plugins.fzf-tab]
+github = "Aloxaf/fzf-tab"
+
+[plugins.zshrc-background]
+local = "~/.config/zsh/.zshrc.d"
+use = ["*.bg.zsh"]
+
+[plugins.fzf]
+local = "/usr/share/fzf"
 
 [plugins.zoxide]
 inline = 'zsh-defer -c "$(zoxide init zsh)"'

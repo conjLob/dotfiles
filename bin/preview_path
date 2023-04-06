@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [ -d "$1" ]; then
+    lsd -A --color=always --icon=always "$1"
+else
+    bat --color=always --plain --line-range=:100 "$1"
+fi
