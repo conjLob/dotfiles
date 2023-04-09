@@ -27,6 +27,9 @@ use = ["*.bg.zsh"]
 [plugins.fzf]
 local = "/usr/share/fzf"
 
+[plugins.bd]
+github = "Tarrasch/zsh-bd"
+
 [plugins.zoxide]
 inline = 'zsh-defer -c "$(zoxide init zsh)"'
 
