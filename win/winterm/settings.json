@@ -36,12 +36,6 @@
                 "source": "Windows.Terminal.PowershellCore"
             },
             {
-                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
-                "hidden": true,
-                "name": "Azure Cloud Shell",
-                "source": "Windows.Terminal.Azure"
-            },
-            {
                 "commandline": "pwsh -f \"%LOCALAPPDATA%\\ArchLinux\\boot.ps1\"",
                 "guid": "{8bf2d7ce-4310-535d-8cfe-1fe3b5f5a5b1}",
                 "hidden": false,
