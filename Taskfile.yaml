@@ -115,6 +115,7 @@ tasks:
 
   sync:win:
     deps:
+      - sync:winterm-settings.json
       - sync:keyhac-config.py
 
   sync:win-file:
@@ -129,6 +130,12 @@ tasks:
     status:
       - test -f {{.WIN_FILE}}
       - test $(stat -c %Y {{.REPO_FILE}}) -eq $(stat -c %Y {{.WIN_FILE}})
+
+  sync:winterm-settings.json:
+    - task: sync:win-file
+      vars:
+        WIN_FILE: "{{.LOCALAPPDATA}}/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json"
+        REPO_FILE: win/winterm/settings.json
 
   sync:keyhac-config.py:
     - task: sync:win-file
