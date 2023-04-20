@@ -43,11 +43,17 @@ tasks:
     status:
       - test -f ~/.ssh/gpg.pub
 
+  fetch:lf-icons:
+    vars:
+      SRC: https://raw.githubusercontent.com/gokcehan/lf/master/etc/icons.example
+    cmds:
+      - curl {{.SRC}} > home/.config/lf/icons
+
   fetch:gitui-key_bindings.ron:
     vars:
       SRC: https://raw.githubusercontent.com/extrawurst/gitui/master/vim_style_key_config.ron
     cmds:
-      - curl {{ .SRC }} > home/.config/gitui/key_bindings.ron
+      - curl {{.SRC}} > home/.config/gitui/key_bindings.ron
 
   sync:etc:
     deps:

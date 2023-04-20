@@ -37,6 +37,7 @@ jupyterlab
 jwt-cli
 kubectl
 kubie
+lf
 llvm
 lsd
 lsof

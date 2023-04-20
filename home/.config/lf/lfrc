@@ -1,0 +1,34 @@
+set shell zsh
+set shellopts '-euy'
+set ifs "\n"
+
+set icons on
+set scrolloff 1
+set previewer preview_path
+
+cmd open
+map i $bat --paging=always "$f"
+map o $$EDITOR "$(fzf --preview 'preview_path {}')"
+
+map J :updir; set dironly true; down; set dironly false; open
+map K :updir; set dironly true; up; set dironly false; open
+
+cmd follow_link %{{
+    lf -remote "send $id select '$(readlink "$f")'"
+}}
+map gL follow_link
+
+map <a-c> ${{
+    result="$(eval "$FZF_ALT_C_COMMAND" | FZF_DEFAULT_OPTS="--reverse ${FZF_DEFAULT_OPTS-} ${FZF_ALT_C_OPTS-}" fzf)"
+    lf -remote "send $id cd '$result'"
+}}
+
+cmd z %{{
+    result="$(zoxide query --exclude "$PWD" $@)"
+    lf -remote "send $id cd '$result'"
+}}
+
+cmd zi ${{
+    result="$(zoxide query -i)"
+    lf -remote "send $id cd '$result'"
+}}
