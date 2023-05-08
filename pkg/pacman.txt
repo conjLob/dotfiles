@@ -46,6 +46,7 @@ man-pages
 mercurial
 miniserve
 mold
+neovim
 nmap
 nodejs
 openssh
@@ -73,7 +74,6 @@ tinyproxy
 traceroute
 tree
 unzip
-vim
 vivid
 wabt
 websocat

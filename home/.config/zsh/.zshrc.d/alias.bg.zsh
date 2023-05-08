@@ -12,6 +12,7 @@ help() {
     "$@" --help 2>&1 | bathelp
 }
 
+alias vi='nvim'
 alias task='go-task'
 
 alias drill='drill -z'

@@ -2,8 +2,8 @@ PATH="$HOME/.local/bin:$PATH"
 PATH="$HOME/repos/dotfiles/bin:$PATH"
 
 export PAGER=less
-export EDITOR=vim
-export VISUAL=vim
+export EDITOR=nvim
+export VISUAL=nvim
 export BROWSER=chrome
 
 # man
