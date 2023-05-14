@@ -2,7 +2,7 @@ set shell zsh
 set shellopts '-euy'
 set ifs "\n"
 
-set icons on
+set icons true
 set scrolloff 1
 set previewer preview_path
 
