@@ -36,8 +36,11 @@ inline = 'zsh-defer -c "$(zoxide init zsh)"'
 [plugins.direnv]
 inline = 'zsh-defer -c "$(direnv hook zsh)"'
 
-[plugins.asdf]
-local = "/opt/asdf-vm"
+[plugins.rtx]
+inline = '''
+  zsh-defer -c "$(rtx activate zsh)"
+  zsh-defer -c "$(rtx completion zsh)"
+'''
 
 [plugins.pipx]
 inline = 'zsh-defer -c "$(register-python-argcomplete -s bash pipx)"'
@@ -51,7 +54,7 @@ remote = "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/docke
 apply = ["fpath"]
 
 [plugins.helmfile]
-inline = 'zsh-defer -c "$(helmfile completion zsh); compdef _helmfile helmfile"'
+inline = 'zsh-defer -c "$(helmfile completion zsh)"'
 
 [plugins.bash-completions]
 local = "/usr/share/bash-completion/completions"

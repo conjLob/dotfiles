@@ -1,4 +1,3 @@
-asdf-vm
 cloud-sql-proxy-bin
 go-task
 google-cloud-sdk
@@ -9,4 +8,5 @@ krew
 pack-cli
 pandoc-bin
 paru
+rtx
 stripe-cli
