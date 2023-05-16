@@ -14,5 +14,6 @@ help() {
 
 alias vi='nvim'
 alias task='go-task'
+alias k9r='k9s --readonly'
 
 alias drill='drill -z'

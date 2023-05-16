@@ -35,6 +35,7 @@ jc
 jq
 jupyterlab
 jwt-cli
+k9s
 kubectl
 kubie
 lf

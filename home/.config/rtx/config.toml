@@ -1,5 +1,6 @@
 [tools]
-erlang = "22.3.4.26"
 elixir = "1.12.3-otp-22"
-python = "system"
+erlang = "22.3.4.26"
+kubectl = "system"
 nodejs = "system"
+python = "system"
