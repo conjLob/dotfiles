@@ -1,0 +1,11 @@
+style = "compact"
+
+show_preview = true
+
+history_filter = [
+    "^(ls|la|ll|lla)( [^|]*|)$",
+    "^(cd|bd|z|zi)( |$)",
+    "^bat( |$)",
+    "^git (status|show|diff|log)( |$)",
+    "^(pass|jwt)( |$)",
+]

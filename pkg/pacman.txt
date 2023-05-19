@@ -1,3 +1,4 @@
+atuin
 aws-cli-v2
 base
 base-devel
