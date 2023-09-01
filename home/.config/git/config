@@ -12,6 +12,8 @@
 	gpgSign = true
 [tag]
 	gpgSign = true
+[log]
+	abbrevCommit = true
 [merge]
 	conflictStyle = diff3
 [diff]
@@ -20,6 +22,13 @@
 [delta]
 	line-numbers = true
 	navigate = true
+[alias]
+	graph = log --graph --all --oneline --date-order
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
 [credential "https://github.com"]
 	helper = !/usr/bin/gh auth git-credential
 [credential "https://gist.github.com"]
