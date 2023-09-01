@@ -5,8 +5,10 @@ google-cloud-cli-gke-gcloud-auth-plugin
 julia-bin
 kind
 krew
+lazydocker
 pack-cli
 pandoc-bin
 paru
 rtx
 stripe-cli
+usql

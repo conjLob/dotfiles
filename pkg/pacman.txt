@@ -15,6 +15,7 @@ dust
 expac
 fd
 ffmpeg
+firejail
 fx
 fzf
 gcc-fortran
@@ -49,6 +50,7 @@ man-pages
 mercurial
 miniserve
 mold
+mtr
 neovim
 nmap
 nodejs
@@ -68,6 +70,7 @@ ripgrep
 rsync
 rustup
 sheldon
+speedtest-cli
 starship
 strace
 tcpdump

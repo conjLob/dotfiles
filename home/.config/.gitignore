@@ -1,8 +1,11 @@
 /.wrangler/
 /composer/
 /configstore/
+/create-next-app-nodejs/
 /gcloud/
+/hardhat-nodejs/
 /helm/
 /htop/
 /k9s/
+/lazydocker/
 /nextjs-nodejs/
