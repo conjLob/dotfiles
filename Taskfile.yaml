@@ -199,7 +199,7 @@ tasks:
       - export:pipx
       - export:pnpm
 
-  export:pacman: pacman -Qqen > pkg/pacman.txt
+  export:pacman: pacman -Qqen | grep -vxf pkg/pacman.ignore.txt > pkg/pacman.txt
 
   export:paru: pacman -Qqem > pkg/paru.txt
 
