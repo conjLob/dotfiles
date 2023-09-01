@@ -2,5 +2,6 @@
   "Microsoft.DotNet.DesktopRuntime.",
   "Microsoft.EdgeWebView2Runtime",
   "Microsoft.VCRedist.",
+  "Nvidia.GeForceExperience",
   "Unity.Unity."
 ]

@@ -1,6 +1,6 @@
 {
   "$schema": "https://aka.ms/winget-packages.schema.2.0.json",
-  "CreationDate": "2023-03-02T21:10:59.309-00:00",
+  "CreationDate": "2023-09-01T20:23:34.952-00:00",
   "Sources": [
     {
       "Packages": [
@@ -12,6 +12,9 @@
         },
         {
           "PackageIdentifier": "DeepL.DeepL"
+        },
+        {
+          "PackageIdentifier": "DevHub.DevHub"
         },
         {
           "PackageIdentifier": "Discord.Discord"
@@ -56,16 +59,19 @@
           "PackageIdentifier": "Mozilla.Firefox"
         },
         {
-          "PackageIdentifier": "Nvidia.GeForceExperience"
-        },
-        {
           "PackageIdentifier": "Postman.Postman"
         },
         {
           "PackageIdentifier": "SlackTechnologies.Slack"
         },
         {
+          "PackageIdentifier": "TheDocumentFoundation.LibreOffice"
+        },
+        {
           "PackageIdentifier": "Unity.UnityHub"
+        },
+        {
+          "PackageIdentifier": "VRChat.CreatorCompanion"
         },
         {
           "PackageIdentifier": "Valve.Steam"
@@ -82,5 +88,5 @@
       }
     }
   ],
-  "WinGetVersion": "1.4.10173"
+  "WinGetVersion": "1.5.2201"
 }
