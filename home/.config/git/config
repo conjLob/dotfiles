@@ -22,6 +22,8 @@
 [delta]
 	line-numbers = true
 	navigate = true
+	hyperlinks = true
+	hyperlinks-file-link-format = ""
 [alias]
 	graph = log --graph --all --oneline --date-order
 [filter "lfs"]
