@@ -4,7 +4,7 @@ from keyhac import *
 
 def configure(keymap):
     keymap.editor = "code"
-    keymap.setFont("HackGen Console NFJ", 16)
+    keymap.setFont("HackGen Console NF", 16)
     keymap.setTheme("black")
     keymap.clipboard_history.enableHook(False)
 
