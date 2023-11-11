@@ -8,6 +8,7 @@ export BROWSER=chrome
 
 # man
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANROFFOPT='-c'
 
 # qt
 export QT_QPA_PLATFORM='wayland;xcb'
