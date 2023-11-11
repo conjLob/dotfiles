@@ -6,6 +6,8 @@ setopt hist_ignore_dups
 setopt hist_expire_dups_first
 setopt hist_find_no_dups
 
+[ ! -d "$XDG_STATE_HOME/zsh" ] && mkdir -p "$XDG_STATE_HOME/zsh"
+
 HISTSIZE=100000
 SAVEHIST=10000
 HISTFILE="$XDG_STATE_HOME/zsh/history"
