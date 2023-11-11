@@ -1,8 +1,37 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions": [],
+    "actions": 
+    [
+        {
+            "command": 
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "keys": "ctrl+c"
+        },
+        {
+            "command": 
+            {
+                "action": "splitPane",
+                "split": "auto",
+                "splitMode": "duplicate"
+            },
+            "keys": "alt+shift+d"
+        },
+        {
+            "command": "find",
+            "keys": "ctrl+shift+f"
+        }
+    ],
     "defaultProfile": "{8bf2d7ce-4310-535d-8cfe-1fe3b5f5a5b1}",
+    "newTabMenu": 
+    [
+        {
+            "type": "remainingProfiles"
+        }
+    ],
     "profiles": 
     {
         "defaults": 
@@ -13,7 +42,7 @@
             "cursorShape": "filledBox",
             "font": 
             {
-                "face": "HackGen Console NFJ",
+                "face": "HackGen Console NF",
                 "size": 12.0
             }
         },
