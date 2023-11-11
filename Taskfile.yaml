@@ -28,10 +28,19 @@ tasks:
   link:ssh-config:
     - task: link:home-file
       vars: { FILE: .ssh/config }
+    - test -f ~/.ssh/config.local || touch ~/.ssh/config.local
+
+  link:gpg.conf:
+    - task: link:home-file
+      vars: { FILE: .gnupg/gpg.conf }
 
   link:gpg-agent.conf:
     - task: link:home-file
       vars: { FILE: .gnupg/gpg-agent.conf }
+
+  link:sshcontrol:
+    - task: link:home-file
+      vars: { FILE: .gnupg/sshcontrol }
 
   link:cargo-config.toml:
     - task: link:home-file
@@ -93,7 +102,7 @@ tasks:
       vars: { FILE: pacman.d/mirrorlist }
 
   sync:resolv.conf:
-    - test -L /etc/resolv.conf && sudo unlink /etc/resolv.conf
+    - test -L /etc/resolv.conf && sudo unlink /etc/resolv.conf || true
     - task: sync:etc-file
       vars: { FILE: resolv.conf }
 
