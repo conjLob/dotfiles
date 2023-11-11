@@ -93,6 +93,7 @@ tasks:
       vars: { FILE: pacman.d/mirrorlist }
 
   sync:resolv.conf:
+    - test -L /etc/resolv.conf && sudo unlink /etc/resolv.conf
     - task: sync:etc-file
       vars: { FILE: resolv.conf }
 
@@ -192,7 +193,6 @@ tasks:
       - export:paru
       - export:winget
       - export:chocolatey
-      - export:asdf
       - export:helm
       - export:cargo
       - export:julia
