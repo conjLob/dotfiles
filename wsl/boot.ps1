@@ -2,15 +2,20 @@
 
 [System.Console]::OutputEncoding = [Text.Encoding]::Unicode
 
-$err = wsl -d ArchLinux --mount --vhd "$Env:LOCALAPPDATA\ArchLinux\home.vhdx" --bare
+$distro = 'ArchLinux'
+$vhds = 'var.vhdx', 'home.vhdx'
 
-if ($?) {
-    Write-Output 'Your VHD was mounted successfully!'
-} elseif ($err[1] -ne 'Error code: Wsl/Service/AttachDisk/MountVhd/WSL_E_USER_VHD_ALREADY_ATTACHED') {
-    Write-Output $err
-    exit 1
+$errCode = 'Wsl/Service/AttachDisk/MountVhd/WSL_E_USER_VHD_ALREADY_ATTACHED'
+
+foreach ($vhd in $vhds) {
+    $err = wsl -d $distro --mount --vhd "$env:LOCALAPPDATA\$distro\$vhd" --bare
+
+    if ($?) {
+        Write-Output "$vhd was mounted successfully!"
+    } elseif ($err[1] -ne "Error code: $errCode") {
+        Write-Output $err
+        exit 1
+    }
 }
 
-$Env:WSLENV += ':USERPROFILE/p:APPDATA/p:LOCALAPPDATA/p'
-
-wsl -d ArchLinux --cd ~
+wsl -d $distro --cd ~
