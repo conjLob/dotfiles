@@ -79,6 +79,8 @@ tasks:
       - sync:pacman-mirrorlist
       - sync:resolv.conf
       - sync:systemd-resolved.conf
+      - sync:timesyncd.conf
+      - sync:systemd-timesyncd.service
       - sync:wsl.conf
       - sync:drop-wsl-paths.sh
       - sync:fonts-wsl.conf
@@ -90,6 +92,7 @@ tasks:
     cmds:
       - >-
         if [ ! -f /etc/{{.FILE}} ] || [ etc/{{.FILE}} -nt /etc/{{.FILE}} ]; then
+          [ -d /etc/{{dir .FILE}} ] || sudo mkdir -p /etc/{{dir .FILE}};
           sudo cp --preserve=timestamps etc/{{.FILE}} /etc/{{.FILE}};
         else
           cp --preserve=timestamps /etc/{{.FILE}} etc/{{.FILE}};
@@ -120,6 +123,14 @@ tasks:
   sync:systemd-resolved.conf:
     - task: sync:etc-file
       vars: { FILE: systemd/resolved.conf }
+
+  sync:timesyncd.conf:
+    - task: sync:etc-file
+      vars: { FILE: systemd/timesyncd.conf }
+
+  sync:systemd-timesyncd.service:
+    - task: sync:etc-file
+      vars: { FILE: systemd/system/systemd-timesyncd.service.d/override.conf }
 
   sync:wsl.conf:
     - task: sync:etc-file
