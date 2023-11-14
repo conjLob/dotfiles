@@ -1,9 +1,12 @@
 [user]
+	useConfigOnly = true
 	name = conjLob
 	email = 53427774+conjLob@users.noreply.github.com
 	signingKey = 51AD0D13AE439BF4
 [core]
 	pager = delta
+[column]
+	ui = auto
 [interactive]
 	diffFilter = delta --color-only
 [init]
@@ -12,10 +15,14 @@
 	gpgSign = true
 [tag]
 	gpgSign = true
+	forceSignAnnotated = true
+[stash]
+	showIncludeUntracked = true
+[status]
+	showUntrackedFiles = all
+	showStash = true
 [log]
 	abbrevCommit = true
-[merge]
-	conflictStyle = diff3
 [diff]
 	algorithm = histogram
 	colorMoved = default
@@ -24,14 +31,34 @@
 	navigate = true
 	hyperlinks = true
 	hyperlinks-file-link-format = ""
+[grep]
+	lineNumber = true
+[fetch]
+	prune = true
+[push]
+	autoSetupRemote = true
+[pull]
+	rebase = merges
+[rebase]
+	rebaseMerges = no-rebase-cousins
+	missingCommitsCheck = warn
+[merge]
+	conflictStyle = diff3
 [alias]
+	amend = commit --amend
+	taglw = tag --no-sign
 	graph = log --graph --all --oneline --date-order
+	grapha = graph --ancestry-path
+	pushf = push --force-with-lease --force-if-includes
+	ff = merge --ff-only
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
 [credential "https://github.com"]
+	helper =
 	helper = !/usr/bin/gh auth git-credential
 [credential "https://gist.github.com"]
+	helper =
 	helper = !/usr/bin/gh auth git-credential
