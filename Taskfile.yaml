@@ -250,6 +250,7 @@ tasks:
   export:pkg:
     deps:
       - export:pacman
+      - export:pacman-optdep
       - export:paru
       - export:winget
       - export:chocolatey
@@ -260,6 +261,8 @@ tasks:
       - export:pnpm
 
   export:pacman: pacman -Qqen | grep -vxf pkg/pacman.ignore.txt > pkg/pacman.txt
+
+  export:pacman-optdep: pacman -Qqdtt > pkg/pacman.optdep.txt
 
   export:paru: pacman -Qqem > pkg/paru.txt
 

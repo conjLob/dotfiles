@@ -69,6 +69,7 @@ rsync
 rustup
 sheldon
 speedtest-cli
+sqlite
 starship
 strace
 tcpdump
@@ -76,7 +77,6 @@ tealdeer
 terraform
 tinyproxy
 traceroute
-tree
 unzip
 vivid
 wabt
