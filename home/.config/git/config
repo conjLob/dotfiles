@@ -23,6 +23,7 @@
 	showStash = true
 [log]
 	abbrevCommit = true
+	date = iso
 [diff]
 	algorithm = histogram
 	colorMoved = default

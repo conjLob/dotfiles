@@ -1,4 +1,4 @@
-alias ls='lsd'
+alias ls='lsd --date="+%F %T %a"'
 alias ll='ls -l'
 alias la='ls -A'
 alias lla='ls -lA'
@@ -11,6 +11,8 @@ alias bathelp='bat --plain --language=help'
 help() {
     "$@" --help 2>&1 | bathelp
 }
+
+alias path='echo $PATH | tr ":" "\n"'
 
 alias vi='nvim'
 alias task='go-task'
