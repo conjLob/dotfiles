@@ -76,13 +76,14 @@ tasks:
     deps:
       - sync:fstab
       - sync:locale.gen
+      - sync:locale.conf
       - sync:pacman-mirrorlist
       - sync:resolv.conf
       - sync:systemd-resolved.conf
       - sync:timesyncd.conf
       - sync:systemd-timesyncd.service
       - sync:wsl.conf
-      - sync:drop-wsl-paths.sh
+      - sync:drop-wsl-env.sh
       - sync:fonts-wsl.conf
 
   sync:etc-file:
@@ -111,6 +112,10 @@ tasks:
       vars: { FILE: locale.gen }
     - task: gen:locale
 
+  sync:locale.conf:
+    - task: sync:etc-file
+      vars: { FILE: locale.conf }
+
   sync:pacman-mirrorlist:
     - task: sync:etc-file
       vars: { FILE: pacman.d/mirrorlist }
@@ -136,9 +141,9 @@ tasks:
     - task: sync:etc-file
       vars: { FILE: wsl.conf }
 
-  sync:drop-wsl-paths.sh:
+  sync:drop-wsl-env.sh:
     - task: sync:etc-file
-      vars: { FILE: profile.d/drop-wsl-paths.sh }
+      vars: { FILE: profile.d/drop-wsl-env.sh }
 
   sync:fonts-wsl.conf:
     - task: sync:etc-file
