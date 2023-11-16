@@ -1,0 +1,65 @@
+version: "3"
+
+set: [e, u, pipefail]
+
+tasks:
+  export:all:
+    deps:
+      - export:pacman
+      - export:pacman-optdep
+      - export:paru
+      - export:winget
+      - export:chocolatey
+      - export:github-cli
+      - export:helm
+      - export:cargo
+      - export:julia
+      - export:pipx
+      - export:pnpm
+
+  export:pacman: pacman -Qqen | grep -vxf pacman.ignore.txt > pacman.txt
+
+  export:pacman-optdep: pacman -Qqdtt > pacman.optdep.txt
+
+  export:paru: pacman -Qqem > paru.txt
+
+  export:winget:
+    cmds:
+      - winget.exe export -o /tmp/winget.json
+      - defer: rm /tmp/winget.json
+      - >-
+        jq '
+          .[1] as $ignores
+          | .[0]
+          | .Sources[0].Packages
+            |= reduce $ignores[] as $ignore (
+              .;
+              map(select(
+                .PackageIdentifier
+                | startswith($ignore)
+                | not
+              ))
+            )
+          | .Sources[0].Packages
+            |= sort_by(.PackageIdentifier)
+        '
+        -s /tmp/winget.json winget.ignore.json
+        > winget.json
+
+  export:chocolatey:
+    - rm chocolatey.xml
+    - choco.exe export -o chocolatey.xml
+
+  export:github-cli: gh extension list | cut -f 2 > github-cli.txt
+
+  export:helm: helm plugin list | tail +2 | cut -f 1 | tr -d ' ' > helm.txt
+
+  export:cargo:
+    - cp ~/.cargo/.crates.toml cargo.toml
+    - cp ~/.cargo/.install_config.toml cargo.config.toml
+
+  export:julia: cp ~/.julia/environments/v1.8/Project.toml julia.toml
+
+  export:pipx: pipx list --short | cut -d ' ' -f 1 > pipx.txt
+
+  export:pnpm: pnpm ls -g --depth 0 | tail +6 | cut -d ' ' -f 1 > pnpm.txt

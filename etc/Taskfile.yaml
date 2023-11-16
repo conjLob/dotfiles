@@ -1,0 +1,95 @@
+version: "3"
+
+set: [e, u, pipefail]
+
+tasks:
+  sync:all:
+    deps:
+      - sync:fstab
+      - sync:locale.gen
+      - sync:locale.conf
+      - sync:pacman-mirrorlist
+      - sync:resolv.conf
+      - sync:systemd-resolved.conf
+      - sync:timesyncd.conf
+      - sync:systemd-timesyncd.service
+      - sync:wsl.conf
+      - sync:drop-wsl-env.sh
+      - sync:fonts-wsl.conf
+
+  sync:etc-file:
+    label: sync:etc-file {{.FILE}}
+    requires:
+      vars: [FILE]
+    cmds:
+      - >-
+        if [ ! -f /etc/{{.FILE}} ] || [ {{.FILE}} -nt /etc/{{.FILE}} ]; then
+          [ -d /etc/{{dir .FILE}} ] || sudo mkdir -p /etc/{{dir .FILE}};
+          sudo cp --preserve=timestamps {{.FILE}} /etc/{{.FILE}};
+        else
+          cp --preserve=timestamps /etc/{{.FILE}} {{.FILE}};
+        fi
+    status:
+      - test -f /etc/{{.FILE}}
+      - test $(stat -c %Y {{.FILE}}) -eq $(stat -c %Y /etc/{{.FILE}})
+    internal: true
+
+  sync:fstab:
+    - task: sync:etc-file
+      vars: { FILE: fstab }
+
+  sync:locale.gen:
+    - task: sync:etc-file
+      vars: { FILE: locale.gen }
+    - task: gen:locale
+
+  sync:locale.conf:
+    - task: sync:etc-file
+      vars: { FILE: locale.conf }
+
+  sync:pacman-mirrorlist:
+    - task: sync:etc-file
+      vars: { FILE: pacman.d/mirrorlist }
+
+  sync:resolv.conf:
+    - task: unlink:resolv.conf
+    - task: sync:etc-file
+      vars: { FILE: resolv.conf }
+
+  sync:systemd-resolved.conf:
+    - task: sync:etc-file
+      vars: { FILE: systemd/resolved.conf }
+
+  sync:timesyncd.conf:
+    - task: sync:etc-file
+      vars: { FILE: systemd/timesyncd.conf }
+
+  sync:systemd-timesyncd.service:
+    - task: sync:etc-file
+      vars: { FILE: systemd/system/systemd-timesyncd.service.d/override.conf }
+
+  sync:wsl.conf:
+    - task: sync:etc-file
+      vars: { FILE: wsl.conf }
+
+  sync:drop-wsl-env.sh:
+    - task: sync:etc-file
+      vars: { FILE: profile.d/drop-wsl-env.sh }
+
+  sync:fonts-wsl.conf:
+    - task: sync:etc-file
+      vars: { FILE: fonts/conf.d/00-wsl.conf }
+
+  gen:locale:
+    cmds:
+      - sudo locale-gen
+    sources:
+      - /etc/locale.gen
+    method: checksum
+
+  unlink:resolv.conf:
+    cmds:
+      - sudo unlink /etc/resolv.conf
+    status:
+      - test ! -L /etc/resolv.conf
+    internal: true

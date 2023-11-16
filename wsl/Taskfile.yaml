@@ -1,0 +1,56 @@
+version: "3"
+
+set: [e, u, pipefail]
+
+tasks:
+  sync:all:
+    deps:
+      - sync:wslconfig
+      - sync:wslgconfig
+      - sync:boot.ps1
+
+  sync:wsl-file:
+    label: sync:wsl-file {{.FILE}}
+    requires:
+      vars:
+        - USERPROFILE
+        - FILE
+    vars:
+      WIN_FILE: "{{.USERPROFILE}}/{{.FILE}}"
+      REPO_FILE: "{{base .FILE}}"
+    cmds:
+      - >-
+        if [ ! -f {{.WIN_FILE}} ] || [ {{.REPO_FILE}} -nt {{.WIN_FILE}} ]; then
+          cp --preserve=timestamps --no-preserve=mode {{.REPO_FILE}} {{.WIN_FILE}};
+        else
+          cp --preserve=timestamps --no-preserve=mode {{.WIN_FILE}} {{.REPO_FILE}};
+        fi
+    status:
+      - test -f {{.WIN_FILE}}
+      - test $(stat -c %Y {{.REPO_FILE}}) -eq $(stat -c %Y {{.WIN_FILE}})
+    internal: true
+
+  sync:wslconfig:
+    - task: sync:wsl-file
+      vars: { FILE: .wslconfig }
+
+  sync:wslgconfig:
+    - task: sync:wsl-file
+      vars: { FILE: .wslgconfig }
+
+  sync:boot.ps1:
+    requires:
+      vars: [WSL_DISTRO_NAME]
+    cmds:
+      - task: sync:wsl-file
+        vars: { FILE: "AppData/Local/{{.WSL_DISTRO_NAME}}/boot.ps1" }
+
+  deploy:wsl-icon:
+    requires:
+      vars:
+        - LOCALAPPDATA
+        - WSL_DISTRO_NAME
+    cmds:
+      - cp icon.png {{.LOCALAPPDATA}}/{{.WSL_DISTRO_NAME}}/icon.png
+    status:
+      - test -f {{.LOCALAPPDATA}}/{{.WSL_DISTRO_NAME}}/icon.png

@@ -1,0 +1,45 @@
+version: "3"
+
+set: [e, u, pipefail]
+
+tasks:
+  sync:all:
+    deps:
+      - sync:winterm-settings.json
+      - sync:keyhac-config.py
+
+  sync:win-file:
+    label: sync:win-file {{.WIN_FILE}} {{.REPO_FILE}}
+    requires:
+      vars:
+        - WIN_FILE
+        - REPO_FILE
+    cmds:
+      - >-
+        if [ ! -f {{.WIN_FILE}} ] || [ {{.REPO_FILE}} -nt {{.WIN_FILE}} ]; then
+          cp --preserve=timestamps --no-preserve=mode {{.REPO_FILE}} {{.WIN_FILE}};
+        else
+          cp --preserve=timestamps --no-preserve=mode {{.WIN_FILE}} {{.REPO_FILE}};
+        fi
+    status:
+      - test -f {{.WIN_FILE}}
+      - test $(stat -c %Y {{.REPO_FILE}}) -eq $(stat -c %Y {{.WIN_FILE}})
+    internal: true
+
+  sync:winterm-settings.json:
+    requires:
+      vars: [LOCALAPPDATA]
+    cmds:
+      - task: sync:win-file
+        vars:
+          WIN_FILE: "{{.LOCALAPPDATA}}/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json"
+          REPO_FILE: winterm/settings.json
+
+  sync:keyhac-config.py:
+    requires:
+      vars: [APPDATA]
+    cmds:
+      - task: sync:win-file
+        vars:
+          WIN_FILE: "{{.APPDATA}}/Keyhac/config.py"
+          REPO_FILE: keyhac/config.py

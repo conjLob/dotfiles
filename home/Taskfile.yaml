@@ -1,0 +1,99 @@
+version: "3"
+
+set: [e, u, pipefail]
+
+tasks:
+  link:all:
+    deps:
+      - link:zshenv
+      - link:config-home
+      - link:ssh-config
+      - link:gpg.conf
+      - link:gpg-agent.conf
+      - link:cargo-config.toml
+
+  link:home-file:
+    label: link:home-file {{.FILE}}
+    requires:
+      vars: [FILE]
+    cmds:
+      - ln -s {{.TASKFILE_DIR}}/{{.FILE}} ~/{{.FILE}}
+    status:
+      - test -L ~/{{.FILE}}
+    internal: true
+
+  link:zshenv:
+    - task: link:home-file
+      vars: { FILE: .zshenv }
+
+  link:config-home:
+    - task: link:home-file
+      vars: { FILE: .config }
+
+  link:ssh-config:
+    - task: link:home-file
+      vars: { FILE: .ssh/config }
+    - task: make:ssh-config.local
+
+  link:gpg.conf:
+    - task: link:home-file
+      vars: { FILE: .gnupg/gpg.conf }
+
+  link:gpg-agent.conf:
+    - task: link:home-file
+      vars: { FILE: .gnupg/gpg-agent.conf }
+
+  link:cargo-config.toml:
+    - task: link:home-file
+      vars: { FILE: .cargo/config.toml }
+
+  make:ssh-config.local:
+    cmds:
+      - touch ~/.ssh/config.local
+    status:
+      - test -f ~/.ssh/config.local
+    internal: true
+
+  deploy:ssh:
+    deps:
+      - deploy:ssh-key
+      - deploy:sshcontrol
+
+  deploy:ssh-key:
+    requires:
+      vars: [USER]
+    cmds:
+      - gpg --export-ssh-key {{.USER}} > ~/.ssh/gpg.pub
+    status:
+      - test -f ~/.ssh/gpg.pub
+    preconditions:
+      - gpg -K {{.USER}}
+
+  deploy:sshcontrol:
+    vars:
+      KEYGRIP:
+        sh: gpg -K --with-keygrip {{.USER}} | grep -A 1 -F '[A]' | tail -1 | awk '{print $3}'
+    cmds:
+      - echo {{.KEYGRIP}} >> ~/.gnupg/sshcontrol
+    status:
+      - test -f ~/.gnupg/sshcontrol
+      - grep {{.KEYGRIP}} ~/.gnupg/sshcontrol
+    preconditions:
+      - gpg -K {{.USER}}
+
+  fetch:configs:
+    deps:
+      - fetch:lf-icons
+      - fetch:gitui-key_bindings.ron
+
+  fetch:lf-icons:
+    vars:
+      SRC: https://raw.githubusercontent.com/gokcehan/lf/master/etc/icons.example
+    cmds:
+      - curl -sS {{.SRC}} > .config/lf/icons
+
+  fetch:gitui-key_bindings.ron:
+    vars:
+      SRC: https://raw.githubusercontent.com/extrawurst/gitui/master/vim_style_key_config.ron
+    cmds:
+      - curl -sS {{.SRC}} > .config/gitui/key_bindings.ron
