@@ -17,11 +17,55 @@ tasks:
       - export:pipx
       - export:pnpm
 
-  export:pacman: pacman -Qqen | grep -vxf pacman.ignore.txt > pacman.txt
+  export:pacman:
+    - pacman -Qqen | grep -vxf pacman.ignore.txt > pacman.txt
+    - pacman -Qqdtt > pacman.optdep.txt
 
-  export:pacman-optdep: pacman -Qqdtt > pacman.optdep.txt
+  import:pacman:
+    vars:
+      EXPORT: pacman -Qqen | grep -vxf pacman.ignore.txt
+    cmds:
+      - sudo pacman -S --asdeps --needed --noconfirm - < pacman.optdep.txt
+      - |-
+        rmpkgs="$(comm -23 <({{.EXPORT}}) pacman.txt)"
+        if [ -n "$rmpkgs" ]; then
+          sudo pacman -D --asdeps $rmpkgs
+        fi
+      - sudo pacman -S --needed --noconfirm - < pacman.txt
+      - task: clean:pacman
+    status:
+      - test -z "$(comm -3 <(pacman -Qqdtt) pacman.optdep.txt)"
+      - test -z "$(comm -3 <({{.EXPORT}}) pacman.txt)"
 
   export:paru: pacman -Qqem > paru.txt
+
+  import:paru:
+    cmds:
+      - |-
+        rmpkgs="$(comm -23 <(pacman -Qqem) paru.txt)"
+        if [ -n "$rmpkgs" ]; then
+          paru -Rns --noconfirm $rmpkgs
+        fi
+      - paru -S --needed - < paru.txt
+      - task: clean:pacman
+    status:
+      - test -z "$(comm -3 <(pacman -Qqem) paru.txt)"
+    interactive: true
+
+  clean:pacman:
+    cmds:
+      - sudo pacman -Rns --noconfirm $(pacman -Qqdt)
+    status:
+      - test -z "$(pacman -Qqdt)"
+
+  gc:pacman:
+    vars:
+      GC: pacman -Rsu $(comm -23 <(pacman -Qqd) <(pacman -Qqdtt))
+    cmds:
+      - sudo {{.GC}}
+    status:
+      - test "$({{.GC}} --print)" = " there is nothing to do"
+    interactive: true
 
   export:winget:
     cmds:
