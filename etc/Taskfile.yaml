@@ -22,12 +22,12 @@ tasks:
     requires:
       vars: [FILE]
     cmds:
-      - >-
+      - |-
         if [ ! -f /etc/{{.FILE}} ] || [ {{.FILE}} -nt /etc/{{.FILE}} ]; then
-          [ -d /etc/{{dir .FILE}} ] || sudo mkdir -p /etc/{{dir .FILE}};
-          sudo cp --preserve=timestamps {{.FILE}} /etc/{{.FILE}};
+          [ -d /etc/{{dir .FILE}} ] || sudo mkdir -p /etc/{{dir .FILE}}
+          sudo cp --preserve=timestamps {{.FILE}} /etc/{{.FILE}}
         else
-          cp --preserve=timestamps /etc/{{.FILE}} {{.FILE}};
+          cp --preserve=timestamps /etc/{{.FILE}} {{.FILE}}
         fi
     status:
       - test -f /etc/{{.FILE}}

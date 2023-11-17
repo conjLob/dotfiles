@@ -15,11 +15,11 @@ tasks:
         - WIN_FILE
         - REPO_FILE
     cmds:
-      - >-
+      - |-
         if [ ! -f {{.WIN_FILE}} ] || [ {{.REPO_FILE}} -nt {{.WIN_FILE}} ]; then
-          cp --preserve=timestamps --no-preserve=mode {{.REPO_FILE}} {{.WIN_FILE}};
+          cp --preserve=timestamps --no-preserve=mode {{.REPO_FILE}} {{.WIN_FILE}}
         else
-          cp --preserve=timestamps --no-preserve=mode {{.WIN_FILE}} {{.REPO_FILE}};
+          cp --preserve=timestamps --no-preserve=mode {{.WIN_FILE}} {{.REPO_FILE}}
         fi
     status:
       - test -f {{.WIN_FILE}}
