@@ -20,6 +20,78 @@ includes:
     dir: wsl
 
 tasks:
+  systemd:setup:all:
+    deps:
+      - systemd:disable:networkd
+      - systemd:enable:resolved
+      - systemd:enable:timesyncd
+      - systemd:disable:boot-update
+      - systemd:disable:pstore
+      - systemd:disable:homed
+
+  systemd:disable:networkd:
+    desc: Disable networkd as network configuration is managed by WSL.
+    cmds:
+      - sudo systemctl disable systemd-networkd.service
+    status:
+      - not systemctl is-enabled systemd-networkd.service
+
+  systemd:enable:resolved:
+    desc: Enable resolved instead of WSL DNS.
+    cmds:
+      - sudo systemctl enable systemd-resolved.service
+    status:
+      - systemctl is-enabled systemd-resolved.service
+
+  systemd:enable:timesyncd:
+    desc: Enable timesyncd as WSL has a bug that time delays after waking from sleep.
+    cmds:
+      - sudo systemctl enable systemd-timesyncd.service
+    status:
+      - systemctl is-enabled systemd-timesyncd.service
+
+  systemd:disable:boot-update:
+    desc: Disable boot-update as containers don't have a boot loader.
+    cmds:
+      - sudo systemctl disable systemd-boot-update.service
+    status:
+      - not systemctl is-enabled systemd-boot-update.service
+
+  systemd:disable:pstore:
+    desc: Disable pstore as it is in a container.
+    cmds:
+      - sudo systemctl disable systemd-pstore.service
+    status:
+      - not systemctl is-enabled systemd-pstore.service
+
+  systemd:disable:homed:
+    desc: homed is not used to reduce dependence on systemd.
+    cmds:
+      - sudo systemctl disable systemd-homed.service
+    status:
+      - not systemctl is-enabled systemd-homed.service
+
+  clean:linux-container:
+    cmds:
+      - sudo rm /pkglist.x86_64.txt
+      - sudo rm /version
+    status:
+      - test ! -f /pkglist.x86_64.txt
+      - test ! -f /version
+
+  setup:pass:
+    requires:
+      vars: [CLI_ARGS]
+    cmds:
+      - git clone {{.CLI_ARGS}} ~/.password-store
+      - pass git config diff.gpg.binary true
+      - pass git config diff.gpg.textconv 'gpg2 -d --quiet --yes --compress-algo=none --no-encrypt-to --batch --use-agent'
+    status:
+      - test -d ~/.password-store
+    preconditions:
+      - sh: test -n "{{.CLI_ARGS}}"
+        msg: "Repository is required: task setup:pass -- <repository>"
+
   enable:corepack:
     cmds:
       - PATH=/usr/bin sudo corepack enable --install-directory /usr/local/bin
