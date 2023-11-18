@@ -3,7 +3,7 @@ shell = "zsh"
 apply = ["defer"]
 
 [templates]
-defer = "{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}"
+defer = "{{ hooks | get: \"pre\" | nl }}{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}{{ hooks | get: \"post\" | nl }}"
 
 [plugins.zsh-defer]
 github = "romkatv/zsh-defer"
@@ -40,10 +40,7 @@ inline = 'zsh-defer -c "$(zoxide init zsh)"'
 inline = 'zsh-defer -c "$(direnv hook zsh)"'
 
 [plugins.rtx]
-inline = '''
-  zsh-defer -c "$(rtx activate zsh)"
-  zsh-defer -c "$(rtx completion zsh)"
-'''
+inline = 'zsh-defer -c "$(rtx activate zsh)"'
 
 [plugins.pipx]
 inline = 'zsh-defer -c "$(register-python-argcomplete -s bash pipx)"'
@@ -52,16 +49,12 @@ inline = 'zsh-defer -c "$(register-python-argcomplete -s bash pipx)"'
 local = "~/.config/tabtab/zsh"
 use = ["pnpm.zsh"]
 
-[plugins.docker-compose]
-remote = "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/docker-compose/_docker-compose"
-apply = ["fpath"]
-
 [plugins.helmfile]
 inline = 'zsh-defer -c "$(helmfile completion zsh)"'
 
 [plugins.bash-completions]
 local = "/usr/share/bash-completion/completions"
-use = ["aws", "kubie"]
+use = ["aws", "hwclock", "kubie", "whois"]
 
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"
