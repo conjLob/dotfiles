@@ -25,6 +25,7 @@
             "keys": "ctrl+shift+f"
         }
     ],
+    "centerOnLaunch": true,
     "defaultProfile": "{8bf2d7ce-4310-535d-8cfe-1fe3b5f5a5b1}",
     "newTabMenu": 
     [
