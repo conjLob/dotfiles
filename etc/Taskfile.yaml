@@ -3,6 +3,17 @@ version: "3"
 set: [e, u, pipefail]
 
 tasks:
+  setup:pacman.conf:
+    cmds:
+      - >-
+        sudo sed
+        -e 's/^#Color$/Color/'
+        -e 's/^#ParallelDownloads = 5$/ParallelDownloads = 5/'
+        -i /etc/pacman.conf
+    status:
+      - grep '^Color$' /etc/pacman.conf
+      - grep '^ParallelDownloads = 5$' /etc/pacman.conf
+
   sync:all:
     deps:
       - sync:fstab

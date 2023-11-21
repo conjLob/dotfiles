@@ -22,12 +22,34 @@ includes:
 tasks:
   systemd:setup:all:
     deps:
-      - systemd:disable:networkd
-      - systemd:enable:resolved
-      - systemd:enable:timesyncd
       - systemd:disable:boot-update
       - systemd:disable:pstore
       - systemd:disable:homed
+      - systemd:disable:networkd
+      - systemd:enable:resolved
+      - systemd:enable:timesyncd
+      - systemd:enable:paccache
+
+  systemd:disable:boot-update:
+    desc: Disable boot-update as containers don't have a boot loader.
+    cmds:
+      - sudo systemctl disable systemd-boot-update.service
+    status:
+      - not systemctl is-enabled systemd-boot-update.service
+
+  systemd:disable:pstore:
+    desc: Disable pstore as it is in a container.
+    cmds:
+      - sudo systemctl disable systemd-pstore.service
+    status:
+      - not systemctl is-enabled systemd-pstore.service
+
+  systemd:disable:homed:
+    desc: homed is not used to reduce dependence on systemd.
+    cmds:
+      - sudo systemctl disable systemd-homed.service
+    status:
+      - not systemctl is-enabled systemd-homed.service
 
   systemd:disable:networkd:
     desc: Disable networkd as network configuration is managed by WSL.
@@ -50,26 +72,12 @@ tasks:
     status:
       - systemctl is-enabled systemd-timesyncd.service
 
-  systemd:disable:boot-update:
-    desc: Disable boot-update as containers don't have a boot loader.
+  systemd:enable:paccache:
+    desc: Enable paccache timer to discard old package cache weekly.
     cmds:
-      - sudo systemctl disable systemd-boot-update.service
+      - sudo systemctl enable paccache.timer
     status:
-      - not systemctl is-enabled systemd-boot-update.service
-
-  systemd:disable:pstore:
-    desc: Disable pstore as it is in a container.
-    cmds:
-      - sudo systemctl disable systemd-pstore.service
-    status:
-      - not systemctl is-enabled systemd-pstore.service
-
-  systemd:disable:homed:
-    desc: homed is not used to reduce dependence on systemd.
-    cmds:
-      - sudo systemctl disable systemd-homed.service
-    status:
-      - not systemctl is-enabled systemd-homed.service
+      - systemctl is-enabled paccache.timer
 
   clean:linux-container:
     cmds:
