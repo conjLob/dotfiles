@@ -2,6 +2,7 @@
 <packages>
   <package id="chocolatey" />
   <package id="chocolatey-font-helpers.extension" />
+  <package id="cica" />
   <package id="FiraCode" />
   <package id="font-firge-nerd" />
   <package id="font-hackgen-nerd" />

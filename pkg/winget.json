@@ -1,14 +1,23 @@
 {
   "$schema": "https://aka.ms/winget-packages.schema.2.0.json",
-  "CreationDate": "2023-09-01T20:23:34.952-00:00",
+  "CreationDate": "2023-11-22T23:12:31.066-00:00",
   "Sources": [
     {
       "Packages": [
+        {
+          "PackageIdentifier": "Amazon.Kindle"
+        },
         {
           "PackageIdentifier": "Bitwarden.Bitwarden"
         },
         {
           "PackageIdentifier": "BlenderFoundation.Blender"
+        },
+        {
+          "PackageIdentifier": "Chocolatey.Chocolatey"
+        },
+        {
+          "PackageIdentifier": "Craftware.Keyhac"
         },
         {
           "PackageIdentifier": "DeepL.DeepL"
@@ -33,6 +42,9 @@
         },
         {
           "PackageIdentifier": "MSYS2.MSYS2"
+        },
+        {
+          "PackageIdentifier": "Microsoft.DevHome"
         },
         {
           "PackageIdentifier": "Microsoft.DotNet.SDK.6"
@@ -62,7 +74,13 @@
           "PackageIdentifier": "Postman.Postman"
         },
         {
+          "PackageIdentifier": "RustemMussabekov.Raindrop"
+        },
+        {
           "PackageIdentifier": "SlackTechnologies.Slack"
+        },
+        {
+          "PackageIdentifier": "SumatraPDF.SumatraPDF"
         },
         {
           "PackageIdentifier": "TheDocumentFoundation.LibreOffice"
@@ -88,5 +106,5 @@
       }
     }
   ],
-  "WinGetVersion": "1.5.2201"
+  "WinGetVersion": "1.6.3133"
 }
