@@ -20,6 +20,7 @@ tasks:
       - sync:locale.gen
       - sync:locale.conf
       - sync:pacman-mirrorlist
+      - sync:journald.conf
       - sync:resolv.conf
       - sync:systemd-resolved.conf
       - sync:timesyncd.conf
@@ -61,6 +62,10 @@ tasks:
   sync:pacman-mirrorlist:
     - task: sync:etc-file
       vars: { FILE: pacman.d/mirrorlist }
+
+  sync:journald.conf:
+    - task: sync:etc-file
+      vars: { FILE: systemd/journald.conf }
 
   sync:resolv.conf:
     - task: unlink:resolv.conf
