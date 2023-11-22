@@ -91,8 +91,8 @@ tasks:
         > winget.json
 
   export:chocolatey:
-    - rm chocolatey.xml
-    - choco.exe export -o chocolatey.xml
+    - rm chocolatey.config
+    - choco.exe export -o chocolatey.config
 
   export:github-cli: gh extension list | cut -f 2 > github-cli.txt
 
