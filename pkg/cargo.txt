@@ -1,0 +1,17 @@
+cargo-asm
+cargo-audit
+cargo-cache
+cargo-deny
+cargo-duplicates
+cargo-expand
+cargo-generate
+cargo-license
+cargo-outdated
+cargo-public-api
+cargo-udeps
+cargo-update
+cargo-watch
+evcxr_jupyter
+evcxr_repl
+wasm-pack
+worker-build

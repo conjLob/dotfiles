@@ -18,12 +18,12 @@ tasks:
       - export:pnpm
 
   export:pacman:
-    - pacman -Qqen | grep -vxf pacman.ignore.txt > pacman.txt
+    - pacman -Qqen | grep -Fxvf pacman.ignore.txt > pacman.txt
     - pacman -Qqdtt > pacman.optdep.txt
 
   import:pacman:
     vars:
-      EXPORT: pacman -Qqen | grep -vxf pacman.ignore.txt
+      EXPORT: pacman -Qqen | grep -Fxvf pacman.ignore.txt
     cmds:
       - sudo pacman -S --asdeps --needed --noconfirm - < pacman.optdep.txt
       - |-
@@ -98,9 +98,40 @@ tasks:
 
   export:helm: helm plugin list | tail +2 | cut -f 1 | tr -d ' ' > helm.txt
 
+  setup:cargo: cargo install cargo-update
+
   export:cargo:
-    - cp ~/.cargo/.crates.toml cargo.toml
-    - cp ~/.cargo/.install_config.toml cargo.config.toml
+    - tomlq -r '.v1 | keys | .[] | split(" ") | .[0]' ~/.cargo/.crates.toml > cargo.txt
+    - task: sync:cargo-config
+
+  import:cargo:
+    vars:
+      EXPORT: tomlq -r '.v1 | keys | .[] | split(" ") | .[0]' ~/.cargo/.crates.toml
+    cmds:
+      - task: sync:cargo-config
+      - |-
+        rmpkgs="$(comm -23 <({{.EXPORT}}) cargo.txt)"
+        if [ -n "$rmpkgs" ]; then
+          cargo uninstall $rmpkgs
+        fi
+      - cargo install-update -i $(cat cargo.txt)
+    status:
+      - test -z "$(comm -3 <({{.EXPORT}}) cargo.txt)"
+
+  sync:cargo-config:
+    vars:
+      HOME_FILE: ~/.cargo/.install_config.toml
+      REPO_FILE: cargo.config.toml
+    cmds:
+      - |-
+        if [ ! -f {{.HOME_FILE}} ] || [ {{.REPO_FILE}} -nt {{.HOME_FILE}} ]; then
+          cp --preserve=timestamps {{.REPO_FILE}} {{.HOME_FILE}}
+        else
+          cp --preserve=timestamps {{.HOME_FILE}} {{.REPO_FILE}}
+        fi
+    status:
+      - test -f {{.HOME_FILE}}
+      - test $(stat -c %Y {{.REPO_FILE}}) -eq $(stat -c %Y {{.HOME_FILE}})
 
   export:julia: cp ~/.julia/environments/v1.8/Project.toml julia.toml
 

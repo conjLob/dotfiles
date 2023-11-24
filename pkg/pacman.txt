@@ -67,6 +67,7 @@ qt5-wayland
 ripgrep
 rsync
 rustup
+sccache
 sheldon
 speedtest-cli
 sqlite
@@ -87,6 +88,7 @@ wl-clipboard
 xh
 xorg-xeyes
 xsv
+yq
 zip
 zoxide
 zsh

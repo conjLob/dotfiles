@@ -1,7 +1,3 @@
-[wasm-pack]
-default_features = false
-features = ["sys-openssl"]
-
 [worker-build]
 default_features = true
 features = []
