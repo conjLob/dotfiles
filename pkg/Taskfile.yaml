@@ -96,6 +96,15 @@ tasks:
 
   export:github-cli: gh extension list | cut -f 2 > github-cli.txt
 
+  import:github-cli:
+    vars:
+      EXPORT: gh extension list | cut -f 2
+    cmds:
+      - comm -23 <({{.EXPORT}}) github-cli.txt | xargs -rL1 gh extension remove
+      - comm -13 <({{.EXPORT}}) github-cli.txt | xargs -rL1 gh extension install
+    status:
+      - test -z "$(comm -3 <({{.EXPORT}}) github-cli.txt)"
+
   export:helm: helm plugin list | tail +2 | cut -f 1 | tr -d ' ' > helm.txt
 
   setup:cargo: cargo install cargo-update

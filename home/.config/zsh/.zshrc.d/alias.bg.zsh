@@ -14,6 +14,9 @@ help() {
 
 alias path='echo $PATH | tr ":" "\n"'
 
+alias what='gh copilot explain'
+alias how='gh copilot suggest -t shell'
+
 alias vi='nvim'
 alias task='go-task'
 alias k9r='k9s --readonly'
