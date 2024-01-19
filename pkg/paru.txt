@@ -7,10 +7,10 @@ kalker-bin
 kind
 krew
 lazydocker-bin
+mise-bin
 numbat-bin
 pack-cli-bin
 pandoc-bin
 paru-bin
-rtx-bin
 stripe-cli-bin
 usql
