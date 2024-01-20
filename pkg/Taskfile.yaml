@@ -6,7 +6,6 @@ tasks:
   export:all:
     deps:
       - export:pacman
-      - export:pacman-optdep
       - export:paru
       - export:winget
       - export:chocolatey
@@ -146,4 +145,26 @@ tasks:
 
   export:pipx: pipx list --short | cut -d ' ' -f 1 > pipx.txt
 
+  import:pipx:
+    vars:
+      EXPORT: pipx list --short | cut -d ' ' -f 1
+    cmds:
+      - comm -23 <({{.EXPORT}}) pipx.txt | xargs -rL1 pipx uninstall
+      - pipx install $(cat pipx.txt)
+    status:
+      - test -z "$(comm -3 <({{.EXPORT}}) pipx.txt)"
+
   export:pnpm: pnpm ls -g --depth 0 | tail +6 | cut -d ' ' -f 1 > pnpm.txt
+
+  import:pnpm:
+    vars:
+      EXPORT: pnpm ls -g --depth 0 | tail +6 | cut -d ' ' -f 1
+    cmds:
+      - |-
+        rmpkgs="$(comm -23 <({{.EXPORT}}) pnpm.txt)"
+        if [ -n "$rmpkgs" ]; then
+          pnpm rm -g $rmpkgs
+        fi
+      - pnpm add -g $(cat pnpm.txt)
+    status:
+      - test -z "$(comm -3 <({{.EXPORT}}) pnpm.txt)"
