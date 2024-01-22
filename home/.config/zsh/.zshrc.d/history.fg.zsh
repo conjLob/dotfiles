@@ -12,6 +12,9 @@ HISTSIZE=100000
 SAVEHIST=10000
 HISTFILE="$XDG_STATE_HOME/zsh/history"
 
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
