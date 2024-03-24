@@ -28,6 +28,7 @@ tasks:
       - sync:wsl.conf
       - sync:drop-wsl-env.sh
       - sync:fonts-wsl.conf
+      - sync:tmpfiles-x11.conf
 
   sync:etc-file:
     label: sync:etc-file {{.FILE}}
@@ -95,6 +96,10 @@ tasks:
   sync:fonts-wsl.conf:
     - task: sync:etc-file
       vars: { FILE: fonts/conf.d/00-wsl.conf }
+
+  sync:tmpfiles-x11.conf:
+    - task: sync:etc-file
+      vars: { FILE: tmpfiles.d/x11.conf }
 
   gen:locale:
     cmds:
