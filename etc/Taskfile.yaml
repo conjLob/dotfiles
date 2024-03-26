@@ -29,6 +29,7 @@ tasks:
       - sync:drop-wsl-env.sh
       - sync:fonts-wsl.conf
       - sync:tmpfiles-x11.conf
+      - sync:systemd-user-runtime-dir
 
   sync:etc-file:
     label: sync:etc-file {{.FILE}}
@@ -100,6 +101,10 @@ tasks:
   sync:tmpfiles-x11.conf:
     - task: sync:etc-file
       vars: { FILE: tmpfiles.d/x11.conf }
+
+  sync:systemd-user-runtime-dir:
+    - task: sync:etc-file
+      vars: { FILE: systemd/system/user-runtime-dir@.service.d/override.conf }
 
   gen:locale:
     cmds:
