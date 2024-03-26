@@ -100,9 +100,17 @@ tasks:
       - sh: test -n "{{.CLI_ARGS}}"
         msg: "Repository is required: task setup:pass -- <repository>"
 
+  link:win-home:
+    requires:
+      vars: [USERPROFILE]
+    cmds:
+      - ln -s {{.USERPROFILE}} ~/win
+    status:
+      - test -L ~/win
+
   enable:corepack:
     cmds:
-      - PATH=/usr/bin sudo corepack enable --install-directory /usr/local/bin
-      - PATH=/usr/bin sudo corepack enable --install-directory /usr/local/bin npm
+      - sudo /usr/bin/corepack enable --install-directory /usr/local/bin
+      - sudo /usr/bin/corepack enable --install-directory /usr/local/bin npm
     status:
       - test -L /usr/local/bin/npm
