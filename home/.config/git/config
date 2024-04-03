@@ -2,7 +2,7 @@
 	useConfigOnly = true
 	name = conjLob
 	email = 53427774+conjLob@users.noreply.github.com
-	signingKey = 51AD0D13AE439BF4
+	signingKey = 0x51AD0D13AE439BF4!
 [core]
 	pager = delta
 [column]
