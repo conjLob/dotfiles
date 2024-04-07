@@ -2,6 +2,10 @@ version: "3"
 
 set: [e, u, pipefail]
 
+env:
+  ON_WSL:
+    sh: uname -r | grep -q microsoft && echo true || echo false
+
 tasks:
   export:all:
     deps:
@@ -17,10 +21,13 @@ tasks:
       - export:pnpm
 
   export:pacman:
-    - pacman -Qqen | grep -Fxvf pacman.ignore.txt > pacman.txt
-    - pacman -Qqdtt > pacman.optdep.txt
+    platforms: [linux]
+    cmds:
+      - pacman -Qqen | grep -Fxvf pacman.ignore.txt > pacman.txt
+      - comm -23 <(pacman -Qqdtt) <(pacman -Qqdt) > pacman.optdep.txt
 
   import:pacman:
+    platforms: [linux]
     vars:
       EXPORT: pacman -Qqen | grep -Fxvf pacman.ignore.txt
     cmds:
@@ -36,9 +43,13 @@ tasks:
       - test -z "$(comm -3 <(pacman -Qqdtt) pacman.optdep.txt)"
       - test -z "$(comm -3 <({{.EXPORT}}) pacman.txt)"
 
-  export:paru: pacman -Qqem > paru.txt
+  export:paru:
+    platforms: [linux]
+    cmds:
+      - pacman -Qqem > paru.txt
 
   import:paru:
+    platforms: [linux]
     cmds:
       - |-
         rmpkgs="$(comm -23 <(pacman -Qqem) paru.txt)"
@@ -52,12 +63,14 @@ tasks:
     interactive: true
 
   clean:pacman:
+    platforms: [linux]
     cmds:
       - sudo pacman -Rns --noconfirm $(pacman -Qqdt)
     status:
       - test -z "$(pacman -Qqdt)"
 
   gc:pacman:
+    platforms: [linux]
     vars:
       GC: pacman -Rsu $(comm -23 <(pacman -Qqd) <(pacman -Qqdtt))
     cmds:
@@ -67,6 +80,8 @@ tasks:
     interactive: true
 
   export:winget:
+    requires:
+      vars: [ON_WSL]
     cmds:
       - winget.exe export -o /tmp/winget.json
       - defer: rm /tmp/winget.json
@@ -88,10 +103,17 @@ tasks:
         '
         -s /tmp/winget.json winget.ignore.json
         > winget.json
+    status:
+      - not $ON_WSL
 
   export:chocolatey:
-    - rm chocolatey.config
-    - choco.exe export -o chocolatey.config
+    requires:
+      vars: [ON_WSL]
+    cmds:
+      - rm chocolatey.config
+      - choco.exe export -o chocolatey.config
+    status:
+      - not $ON_WSL
 
   export:github-cli: gh extension list | cut -f 2 > github-cli.txt
 
@@ -130,13 +152,12 @@ tasks:
     vars:
       HOME_FILE: ~/.cargo/.install_config.toml
       REPO_FILE: cargo.config.toml
-    cmds:
-      - |-
-        if [ ! -f {{.HOME_FILE}} ] || [ {{.REPO_FILE}} -nt {{.HOME_FILE}} ]; then
-          cp --preserve=timestamps {{.REPO_FILE}} {{.HOME_FILE}}
-        else
-          cp --preserve=timestamps {{.HOME_FILE}} {{.REPO_FILE}}
-        fi
+    cmd: |-
+      if [ ! -f {{.HOME_FILE}} ] || [ {{.REPO_FILE}} -nt {{.HOME_FILE}} ]; then
+        cp --preserve=timestamps {{.REPO_FILE}} {{.HOME_FILE}}
+      else
+        cp --preserve=timestamps {{.HOME_FILE}} {{.REPO_FILE}}
+      fi
     status:
       - test -f {{.HOME_FILE}}
       - test $(stat -c %Y {{.REPO_FILE}}) -eq $(stat -c %Y {{.HOME_FILE}})

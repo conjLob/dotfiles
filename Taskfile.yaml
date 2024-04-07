@@ -2,6 +2,10 @@ version: "3"
 
 set: [e, u, pipefail]
 
+env:
+  ON_WSL:
+    sh: uname -r | grep -q microsoft && echo true || echo false
+
 includes:
   etc:
     taskfile: etc
@@ -21,6 +25,7 @@ includes:
 
 tasks:
   systemd:setup:all:
+    platforms: [linux]
     deps:
       - systemd:disable:boot-update
       - systemd:disable:pstore
@@ -28,24 +33,32 @@ tasks:
       - systemd:disable:networkd
       - systemd:enable:resolved
       - systemd:enable:timesyncd
+      - systemd:enable:fstrim
       - systemd:enable:paccache
 
   systemd:disable:boot-update:
     desc: Disable boot-update as containers don't have a boot loader.
+    platforms: [linux]
+    requires:
+      vars: [ON_WSL]
     cmds:
       - sudo systemctl disable systemd-boot-update.service
     status:
-      - not systemctl is-enabled systemd-boot-update.service
+      - not $ON_WSL || not systemctl is-enabled systemd-boot-update.service
 
   systemd:disable:pstore:
     desc: Disable pstore as it is in a container.
+    platforms: [linux]
+    requires:
+      vars: [ON_WSL]
     cmds:
       - sudo systemctl disable systemd-pstore.service
     status:
-      - not systemctl is-enabled systemd-pstore.service
+      - not $ON_WSL || not systemctl is-enabled systemd-pstore.service
 
   systemd:disable:homed:
     desc: homed is not used to reduce dependence on systemd.
+    platforms: [linux]
     cmds:
       - sudo systemctl disable systemd-homed.service
     status:
@@ -53,13 +66,17 @@ tasks:
 
   systemd:disable:networkd:
     desc: Disable networkd as network configuration is managed by WSL.
+    platforms: [linux]
+    requires:
+      vars: [ON_WSL]
     cmds:
       - sudo systemctl disable systemd-networkd.service
     status:
-      - not systemctl is-enabled systemd-networkd.service
+      - not $ON_WSL || not systemctl is-enabled systemd-networkd.service
 
   systemd:enable:resolved:
     desc: Enable resolved instead of WSL DNS.
+    platforms: [linux]
     cmds:
       - sudo systemctl enable systemd-resolved.service
     status:
@@ -67,25 +84,41 @@ tasks:
 
   systemd:enable:timesyncd:
     desc: Enable timesyncd as WSL has a bug that time delays after waking from sleep.
+    platforms: [linux]
     cmds:
       - sudo systemctl enable systemd-timesyncd.service
     status:
       - systemctl is-enabled systemd-timesyncd.service
 
+  systemd:enable:fstrim:
+    desc: Enable fstrim timer to discard unused filesystem blocks weekly.
+    platforms: [linux]
+    requires:
+      vars: [ON_WSL]
+    cmds:
+      - sudo systemctl enable fstrim.timer
+    status:
+      - $ON_WSL || systemctl is-enabled fstrim.timer
+
   systemd:enable:paccache:
     desc: Enable paccache timer to discard old package cache weekly.
+    platforms: [linux]
     cmds:
       - sudo systemctl enable paccache.timer
     status:
       - systemctl is-enabled paccache.timer
 
   clean:linux-container:
+    requires:
+      vars: [ON_WSL]
     cmds:
       - sudo rm /pkglist.x86_64.txt
       - sudo rm /version
     status:
       - test ! -f /pkglist.x86_64.txt
       - test ! -f /version
+    preconditions:
+      - $ON_WSL
 
   setup:pass:
     requires:
@@ -102,11 +135,15 @@ tasks:
 
   link:win-home:
     requires:
-      vars: [USERPROFILE]
+      vars:
+        - ON_WSL
+        - USERPROFILE
     cmds:
       - ln -s {{.USERPROFILE}} ~/win
     status:
       - test -L ~/win
+    preconditions:
+      - $ON_WSL
 
   enable:corepack:
     cmds:

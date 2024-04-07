@@ -2,19 +2,24 @@ version: "3"
 
 set: [e, u, pipefail]
 
+env:
+  ON_WSL:
+    sh: uname -r | grep -q microsoft && echo true || echo false
+
 tasks:
   setup:pacman.conf:
-    cmds:
-      - >-
-        sudo sed
-        -e 's/^#Color$/Color/'
-        -e 's/^#ParallelDownloads = 5$/ParallelDownloads = 5/'
-        -i /etc/pacman.conf
+    platforms: [linux]
+    cmd: >-
+      sudo sed
+      -e 's/^#Color$/Color/'
+      -e 's/^#ParallelDownloads = 5$/ParallelDownloads = 5/'
+      -i /etc/pacman.conf
     status:
       - grep '^Color$' /etc/pacman.conf
       - grep '^ParallelDownloads = 5$' /etc/pacman.conf
 
   sync:all:
+    platforms: [linux]
     deps:
       - sync:fstab
       - sync:locale.gen
@@ -33,24 +38,29 @@ tasks:
 
   sync:etc-file:
     label: sync:etc-file {{.FILE}}
+    platforms: [linux]
     requires:
       vars: [FILE]
-    cmds:
-      - |-
-        if [ ! -f /etc/{{.FILE}} ] || [ {{.FILE}} -nt /etc/{{.FILE}} ]; then
-          [ -d /etc/{{dir .FILE}} ] || sudo mkdir -p /etc/{{dir .FILE}}
-          sudo cp --preserve=timestamps {{.FILE}} /etc/{{.FILE}}
-        else
-          cp --preserve=timestamps /etc/{{.FILE}} {{.FILE}}
-        fi
+    cmd: |-
+      if [ ! -f /etc/{{.FILE}} ] || [ {{.FILE}} -nt /etc/{{.FILE}} ]; then
+        [ -d /etc/{{dir .FILE}} ] || sudo mkdir -p /etc/{{dir .FILE}}
+        sudo cp --preserve=timestamps {{.FILE}} /etc/{{.FILE}}
+      else
+        cp --preserve=timestamps /etc/{{.FILE}} {{.FILE}}
+      fi
     status:
       - test -f /etc/{{.FILE}}
       - test $(stat -c %Y {{.FILE}}) -eq $(stat -c %Y /etc/{{.FILE}})
     internal: true
 
   sync:fstab:
-    - task: sync:etc-file
+    requires:
+      vars: [ON_WSL]
+    cmd:
+      task: sync:etc-file
       vars: { FILE: fstab }
+    status:
+      - not $ON_WSL
 
   sync:locale.gen:
     - task: sync:etc-file
@@ -83,30 +93,61 @@ tasks:
       vars: { FILE: systemd/timesyncd.conf }
 
   sync:systemd-timesyncd.service:
-    - task: sync:etc-file
+    requires:
+      vars: [ON_WSL]
+    cmd:
+      task: sync:etc-file
       vars: { FILE: systemd/system/systemd-timesyncd.service.d/override.conf }
+    status:
+      - not $ON_WSL
 
   sync:wsl.conf:
-    - task: sync:etc-file
+    requires:
+      vars: [ON_WSL]
+    cmd:
+      task: sync:etc-file
       vars: { FILE: wsl.conf }
+    status:
+      - not $ON_WSL
 
   sync:drop-wsl-env.sh:
-    - task: sync:etc-file
+    requires:
+      vars: [ON_WSL]
+    cmd:
+      task: sync:etc-file
       vars: { FILE: profile.d/drop-wsl-env.sh }
+    status:
+      - not $ON_WSL
 
   sync:fonts-wsl.conf:
-    - task: sync:etc-file
+    requires:
+      vars: [ON_WSL]
+    cmd:
+      task: sync:etc-file
       vars: { FILE: fonts/conf.d/00-wsl.conf }
+    status:
+      - not $ON_WSL
 
   sync:tmpfiles-x11.conf:
-    - task: sync:etc-file
+    requires:
+      vars: [ON_WSL]
+    cmd:
+      task: sync:etc-file
       vars: { FILE: tmpfiles.d/x11.conf }
+    status:
+      - not $ON_WSL
 
   sync:systemd-user-runtime-dir:
-    - task: sync:etc-file
+    requires:
+      vars: [ON_WSL]
+    cmd:
+      task: sync:etc-file
       vars: { FILE: systemd/system/user-runtime-dir@.service.d/override.conf }
+    status:
+      - not $ON_WSL
 
   gen:locale:
+    platforms: [linux]
     cmds:
       - sudo locale-gen
     sources:
@@ -114,6 +155,7 @@ tasks:
     method: checksum
 
   unlink:resolv.conf:
+    platforms: [linux]
     cmds:
       - sudo unlink /etc/resolv.conf
     status:

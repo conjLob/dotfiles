@@ -15,7 +15,9 @@ tasks:
   link:home-file:
     label: link:home-file {{.FILE}}
     requires:
-      vars: [FILE]
+      vars:
+        - TASKFILE_DIR
+        - FILE
     cmds:
       - ln -s {{.TASKFILE_DIR}}/{{.FILE}} ~/{{.FILE}}
     status:
@@ -70,6 +72,8 @@ tasks:
       - gpg -K {{.USER}}
 
   deploy:sshcontrol:
+    requires:
+      vars: [USER]
     vars:
       KEYGRIP:
         sh: gpg -K --with-keygrip {{.USER}} | grep -A 1 -F '[A]' | tail -1 | awk '{print $3}'

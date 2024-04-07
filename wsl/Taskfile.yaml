@@ -2,32 +2,42 @@ version: "3"
 
 set: [e, u, pipefail]
 
+env:
+  ON_WSL:
+    sh: uname -r | grep -q microsoft && echo true || echo false
+
 tasks:
   sync:all:
+    requires:
+      vars: [ON_WSL]
     deps:
       - sync:wslconfig
       - sync:wslgconfig
       - sync:boot.ps1
+    preconditions:
+      - $ON_WSL
 
   sync:wsl-file:
     label: sync:wsl-file {{.FILE}}
     requires:
       vars:
+        - ON_WSL
         - USERPROFILE
         - FILE
     vars:
       WIN_FILE: "{{.USERPROFILE}}/{{.FILE}}"
       REPO_FILE: "{{base .FILE}}"
-    cmds:
-      - |-
-        if [ ! -f {{.WIN_FILE}} ] || [ {{.REPO_FILE}} -nt {{.WIN_FILE}} ]; then
-          cp --preserve=timestamps --no-preserve=mode {{.REPO_FILE}} {{.WIN_FILE}}
-        else
-          cp --preserve=timestamps --no-preserve=mode {{.WIN_FILE}} {{.REPO_FILE}}
-        fi
+    cmd: |-
+      if [ ! -f {{.WIN_FILE}} ] || [ {{.REPO_FILE}} -nt {{.WIN_FILE}} ]; then
+        cp --preserve=timestamps --no-preserve=mode {{.REPO_FILE}} {{.WIN_FILE}}
+      else
+        cp --preserve=timestamps --no-preserve=mode {{.WIN_FILE}} {{.REPO_FILE}}
+      fi
     status:
       - test -f {{.WIN_FILE}}
       - test $(stat -c %Y {{.REPO_FILE}}) -eq $(stat -c %Y {{.WIN_FILE}})
+    preconditions:
+      - $ON_WSL
     internal: true
 
   sync:wslconfig:
@@ -41,16 +51,19 @@ tasks:
   sync:boot.ps1:
     requires:
       vars: [WSL_DISTRO_NAME]
-    cmds:
-      - task: sync:wsl-file
-        vars: { FILE: "AppData/Local/{{.WSL_DISTRO_NAME}}/boot.ps1" }
+    cmd:
+      task: sync:wsl-file
+      vars: { FILE: "AppData/Local/{{.WSL_DISTRO_NAME}}/boot.ps1" }
 
   deploy:wsl-icon:
     requires:
       vars:
+        - ON_WSL
         - LOCALAPPDATA
         - WSL_DISTRO_NAME
     cmds:
       - cp icon.png {{.LOCALAPPDATA}}/{{.WSL_DISTRO_NAME}}/icon.png
     status:
       - test -f {{.LOCALAPPDATA}}/{{.WSL_DISTRO_NAME}}/icon.png
+    preconditions:
+      - $ON_WSL
