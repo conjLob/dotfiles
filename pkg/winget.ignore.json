@@ -1,6 +1,10 @@
 [
+  "Microsoft.AppInstaller",
   "Microsoft.DotNet.DesktopRuntime.",
   "Microsoft.EdgeWebView2Runtime",
+  "Microsoft.Teams",
+  "Microsoft.UI.",
+  "Microsoft.VCLibs.",
   "Microsoft.VCRedist.",
   "Nvidia.GeForceExperience",
   "Unity.Unity."

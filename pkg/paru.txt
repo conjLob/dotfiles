@@ -2,6 +2,7 @@ cloud-sql-proxy-bin
 go-task-bin
 google-cloud-cli
 google-cloud-cli-gke-gcloud-auth-plugin
+jnv
 julia-bin
 kalker-bin
 kind
