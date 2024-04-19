@@ -51,9 +51,8 @@ inline = 'zsh-defer -c "$(mise activate zsh)"'
 [plugins.pipx]
 inline = 'zsh-defer -c "$(register-python-argcomplete -s bash pipx)"'
 
-[plugins.tabtab]
-local = "~/.config/tabtab/zsh"
-use = ["pnpm.zsh"]
+[plugins.pnpm]
+inline = 'zsh-defer -c "$(pnpm completion zsh)"'
 
 [plugins.helmfile]
 inline = 'zsh-defer -c "$(helmfile completion zsh)"'
