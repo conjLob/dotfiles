@@ -18,8 +18,8 @@ def configure(keymap):
     keymap_global["BackSlash"] = "S-BackSlash"
     keymap_global["A-Yen"] = keymap.InputTextCommand("¥")
 
-    # DeepL
-    keymap_global["W-Q"] = "W-F9"  # translate with popup
-    keymap_global["A-W-Q"] = "A-W-F9"  # translate with window
-    keymap_global["S-W-Q"] = "S-W-F9"  # capture and translate
-    keymap_global["C-W-Q"] = "C-W-F9"  # replace with translation
+    # DeepL (virtual key code: 124 = F13)
+    keymap_global["W-Q"] = "C-A-(124)"  # translate with popup
+    keymap_global["A-W-Q"] = "A-W-(124)"  # translate with window
+    keymap_global["S-W-Q"] = "S-W-(124)"  # capture and translate
+    keymap_global["C-W-Q"] = "C-W-(124)"  # replace with translation
